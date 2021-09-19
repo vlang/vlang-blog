@@ -1,0 +1,19 @@
+# Ignore the output directory
+public
+
+# Ignore the generated source files
+static/js
+static/css
+
+# Ignore package locks
+package-lock.json
+
+# Ignore node modules
+node_modules
+
+# Editor specific configuration
+*.idea
+.vscode
+
+# Ignore environment variable configuration
+.env
