@@ -1,0 +1,20 @@
+{
+  "baseURL": "/",
+  "languageCode": "en-us",
+  "title": "Blog | The V Programming Language",
+  "ignoreFiles": [".scss$", ".ts$"],
+  "minify": {
+    "minifyOutput": true
+  },
+  "permalinks": {
+    "blog": "/:filename:"
+  },
+  "taxonomies": {
+    "tag": "tags"
+  },
+  "markup": {
+    "highlight": {
+      "style": "dracula"
+    }
+  }
+}
