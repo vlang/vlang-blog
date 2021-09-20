@@ -1,0 +1,21 @@
+{{ define "main" }}
+<main>
+  <h1 class="title">{{ .Title | markdownify }}</h1>
+  <p>{{ .Params.subtitle | markdownify }}</p>
+  {{ range (.Paginate .Pages.ByPublishDate.Reverse).Pages }}
+  <h1>
+    <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
+  </h1>
+  {{ if .Params.image }}
+  <figure>
+    <a href="{{ .RelPermalink }}">
+      <img src="{{ .Params.image }}" alt="{{ .Params.summary | markdownify }}" />
+    </a>
+    <figcaption>{{ .Params.subtitle | markdownify }}</figcaption>
+  </figure>
+  {{ else }}
+  <p>{{ .Params.summary | markdownify }}</p>
+  {{ end }}
+  {{ end }}
+</main>
+{{ end }}

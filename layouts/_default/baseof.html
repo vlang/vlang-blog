@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  {{ partial "head.html" . }}
+  <body>
+    {{ partial "navbar.html" . }}
+    <main>
+      <article>{{ block "main" .}}{{ end }}</article>
+    </main>
+    {{ partial "footer.html" . }} {{ partial "script.html" }}
+    <!-- Include KaTeX if necessary -->
+    {{ if .Params.katex }} {{ partial "katex.html" . }} {{ end }}
+  </body>
+</html>
