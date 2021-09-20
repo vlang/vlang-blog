@@ -1,0 +1,12 @@
+{
+  "include": ["./"],
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "removeComments": true,
+    "watch": false,
+    "outDir": "../../static/js"
+  }
+}
