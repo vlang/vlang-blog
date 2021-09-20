@@ -1,0 +1,21 @@
+{
+  "name": "vlang-blog",
+  "version": "1.0.0",
+  "description": "Source code for VLang's Blog",
+  "scripts": {
+    "ts": "cd src/ts; tsc;",
+    "tsw": "cd src/ts; tsc -w &>/dev/null &",
+    "ss": "sass src/scss:static/css",
+    "ssw": "sass --watch src/scss:static/css &>/dev/null &",
+    "clean": "rm -rf static/css; rm -rf static/js; rm -rf public"
+  },
+  "author": "Subhomoy Haldar",
+  "bugs": {
+    "url": "https://github.com/vlang/v/issues"
+  },
+  "homepage": "https://vlang.io/",
+  "dependencies": {
+    "sass": "^1.41.1",
+    "typescript": "^4.4.3"
+  }
+}
