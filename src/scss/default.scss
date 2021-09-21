@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-size: 18px;
+
+  main {
+    padding: 1rem;
+    line-height: 1.8rem;
+    font-family: "IBM Plex Sans", sans-serif;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Jost", sans-serif;
+      margin: 2rem 0 0.5rem 0;
+    }
+  }
+
+  footer {
+    text-align: center;
+    font-family: "Jost", sans-serif;
+  }
+}
