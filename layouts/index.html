@@ -1,54 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog | The V Programming Language</title>
+    {{ partial "head.html" . }}
   </head>
   <body>
     {{ partial "navbar.html" . }}
-    <div id="hero">
-      <h1>Official Blog</h1>
-      <h2>News and columns for the V Programming Language</h2>
-    </div>
-    <div id="latest">
-      <h2>Latest</h2>
-      {{ range .Site.Pages }} {{ if in .Permalink "blog" }}
-      <!-- Select the Blog Post Page/Folder -->
-      {{ range first 2 .Pages.ByPublishDate.Reverse }}
-      <!-- Select the two most recent blog posts -->
-      <div class="post">
-        <h3>
-          <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
-        </h3>
-        {{ if .Params.image }}
-        <figure>
-          <a href="{{ .RelPermalink }}">
-            <img
-              src="{{ .Params.image }}"
-              alt="{{ .Params.summary | markdownify }}"
-            />
-          </a>
-          <figcaption>{{ .Params.subtitle | markdownify }}</figcaption>
-        </figure>
-        {{ else }}
-        <p>{{ .Params.summary | markdownify }}</p>
-        {{ end }}
+    <main>
+      <div id="hero">
+        <h1>Official Blog</h1>
+        <h2>News and columns for the V Programming Language</h2>
       </div>
-      <!-- Summary of the posts -->
-      {{ end }} {{ end }} {{ end }}
-    </div>
-    <h2>All Posts</h2>
-    <p>
-      Check out all our blog posts here: <a href="/blog/">Archives</a>. We post
-      community updates, short guides, and other information regularly.
-    </p>
-    <h2>Learn more about the people behind V</h2>
-    <p>
-      Here is an organised collection of articles on the contributors who make V
-      Lang greater than the sum of its parts: <a href="/people/">People</a>
-    </p>
+      <div id="latest">
+        <h2>Latest</h2>
+        {{ range .Site.Pages }} {{ if in .Permalink "blog" }}
+        <!-- Select the Blog Post Page/Folder -->
+        {{ range first 2 .Pages.ByPublishDate.Reverse }}
+        <!-- Select the two most recent blog posts -->
+        <div class="post">
+          <h3>
+            <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
+          </h3>
+          {{ if .Params.image }}
+          <figure>
+            <a href="{{ .RelPermalink }}">
+              <img
+                src="{{ .Params.image }}"
+                alt="{{ .Params.summary | markdownify }}"
+              />
+            </a>
+            <figcaption>{{ .Params.subtitle | markdownify }}</figcaption>
+          </figure>
+          {{ else }}
+          <p>{{ .Params.summary | markdownify }}</p>
+          {{ end }}
+        </div>
+        <!-- Summary of the posts -->
+        {{ end }} {{ end }} {{ end }}
+      </div>
+      <h2>All Posts</h2>
+      <p>
+        Check out all our blog posts here: <a href="/blog/">Archives</a>. We
+        post community updates, short guides, and other information regularly.
+      </p>
+      <h2>Learn more about the people behind V</h2>
+      <p>
+        Here is an organised collection of articles on the contributors who make
+        V Lang greater than the sum of its parts: <a href="/people/">People</a>
+      </p>
+    </main>
     {{ partial "footer.html" . }}
   </body>
 </html>
