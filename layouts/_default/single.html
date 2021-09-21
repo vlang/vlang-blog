@@ -1,4 +1,11 @@
 {{ define "main" }}
 <h1 class="title">{{ .Title | markdownify }}</h1>
 <p class="subtitle">{{ .Params.subtitle | markdownify }}</p>
-{{ .Content }} {{ end }}
+{{ .Content }}
+{{ if .Params.authorname }}
+<div class="author">
+  Article by
+  <a href="/people/{{ .Params.authorlink }}">{{ .Params.authorname }}</a>
+</div>
+{{ end }}
+{{ end }}
