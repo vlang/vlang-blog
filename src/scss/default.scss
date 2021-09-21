@@ -5,11 +5,11 @@
 }
 body {
   font-size: 18px;
+  font-family: "IBM Plex Sans", sans-serif;
 
   main {
     padding: 1rem;
     line-height: 1.8rem;
-    font-family: "IBM Plex Sans", sans-serif;
 
     h1,
     h2,
@@ -24,6 +24,5 @@ body {
 
   footer {
     text-align: center;
-    font-family: "Jost", sans-serif;
   }
 }

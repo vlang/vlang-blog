@@ -1,11 +1,39 @@
 {{ define "main" }}
 <h1 class="title">{{ .Title | markdownify }}</h1>
 <p class="subtitle">{{ .Params.subtitle | markdownify }}</p>
-{{ .Content }}
-{{ if .Params.authorname }}
+
+{{ $authorlink := .File.BaseFileName }} {{ .Content }}
+<!-- Append list of posts by author if necessary -->
+{{ if eq .Params.Page "People" }}
+<h1>Posts by {{ .Title | markdownify }}</h1>
+{{ range .Site.Pages }}
+<!-- Iterate over all top level pages -->
+{{ if in .Permalink "blog" }}
+<!-- We are interested only in the blog posts -->
+{{ range .Pages.ByPublishDate.Reverse }}
+<!-- Process latest posts first -->
+{{ if eq .Params.authorlink $authorlink }}
+<div class="post">
+  <h3>
+    <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
+  </h3>
+  {{ if .Params.image }}
+  <figure>
+    <a href="{{ .RelPermalink }}">
+      <img
+        src="{{ .Params.image }}"
+        alt="{{ .Params.summary | markdownify }}"
+      />
+    </a>
+    <figcaption>{{ .Params.subtitle | markdownify }}</figcaption>
+  </figure>
+  {{ else }}
+  <p>{{ .Params.summary | markdownify }}</p>
+  {{ end }} {{ end }} {{ end }}
+</div>
+{{ end }} {{ end }} {{ end }} {{ if .Params.authorname }}
 <div class="author">
   Article by
   <a href="/people/{{ .Params.authorlink }}">{{ .Params.authorname }}</a>
 </div>
-{{ end }}
-{{ end }}
+{{ end }} {{ end }}
