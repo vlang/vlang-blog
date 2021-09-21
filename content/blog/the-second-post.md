@@ -3,6 +3,8 @@ title: "The Second Post"
 subtitle: This is the second post in the archive
 summary: Another test page for ensuring that the structure is functional.
 page: Blog
+authorname: John Doe
+authorlink: john-doe
 date: 2021-09-21T15:22:21+05:30
 ---
 
