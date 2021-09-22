@@ -1,8 +1,17 @@
 {{ define "main" }}
 <h1 class="title">{{ .Title | markdownify }}</h1>
 <p class="subtitle">{{ .Params.subtitle | markdownify }}</p>
+<!-- Append categories if necessary -->
+{{ if eq .Params.Page "Blog" }}
+<ul class="categories">
+  {{ with .Params.categories }} {{ range . }}
+  <!--  -->
+  {{ $href := print (absURL "categories/") (urlize .) }}
+  <li><a href="{{ $href }}/">{{ . }}</a></li>
+  {{ end }}
+</ul>
+{{ end }} {{ end }} {{ $authorlink := .File.BaseFileName }} {{ .Content }}
 
-{{ $authorlink := .File.BaseFileName }} {{ .Content }}
 <!-- Append list of posts by author if necessary -->
 {{ if eq .Params.Page "People" }}
 <h1>Posts by {{ .Title | markdownify }}</h1>
