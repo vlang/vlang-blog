@@ -10,7 +10,7 @@
     "blog": "/:filename:"
   },
   "taxonomies": {
-    "tag": "tags"
+    "tag": "categories"
   },
   "markup": {
     "highlight": {
