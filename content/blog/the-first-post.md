@@ -6,6 +6,7 @@ page: Blog
 authorname: John Doe
 authorlink: john-doe
 date: 2021-09-21T12:08:18+05:30
+categories: ["news"]
 ---
 
 # Introduction

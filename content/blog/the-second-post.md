@@ -6,6 +6,7 @@ page: Blog
 authorname: John Doe
 authorlink: john-doe
 date: 2021-09-21T15:22:21+05:30
+categories: ["tutorials"]
 ---
 
 # Similar to the previous post
