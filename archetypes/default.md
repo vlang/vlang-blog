@@ -6,4 +6,5 @@ page: Blog
 authorname:
 authorlink:
 date: {{ .Date }}
+image:
 ---

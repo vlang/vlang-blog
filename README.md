@@ -45,6 +45,12 @@ hugo new people/firstname-lastname.md
 
 This will create an empty profile page for the contributor which can be filled in with necessary information. The template for this is [people.md](archetypes/people.md)
 
+### Adding Images
+
+Download the hero images elsewhere and optimize them. One easy to use tool is [squoosh.app](https://squoosh.app/). The recommended extension is WebP and the size should ideally under 500 K. Best if under 100 K. If you need to preserve detail, don't resize too much. Keep it at 4K or 1080p. The recommended place to store the optimized image is in the images folder static directory, under the directory with the same name as the post.
+
+Check the existing structure to see how the images are stored.
+
 ### Deployment
 
 1. From the root of the repository, run the `build.sh` script. (Some environments prefer `sh build.sh` instead of `./build.sh`)
