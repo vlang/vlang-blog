@@ -12,7 +12,13 @@
   </li>
   {{ end }}
 </ul>
-{{ end }} {{ end }} {{ $authorlink := .File.BaseFileName }} {{ .Content }}
+{{ end }} {{ if .Params.image }}
+<figure>
+  <img src="/{{ .Params.image }}" alt="Hero image" />
+</figure>
+{{ end }}
+<!-- We include the hero image above if it exists -->
+{{ end }} {{ $authorlink := .File.BaseFileName }} {{ .Content }}
 
 <!-- Append list of posts by author if necessary -->
 {{ if eq .Params.Page "People" }}
