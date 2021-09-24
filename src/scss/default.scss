@@ -20,6 +20,17 @@ body {
       font-family: "Jost", sans-serif;
       margin: 2rem 0 0.5rem 0;
     }
+
+    figure {
+      img {
+        width: 80%;
+        border-radius: 5px;
+      }
+
+      figcaption {
+        font-style: italic;
+      }
+    }
   }
 
   footer {

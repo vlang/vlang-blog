@@ -7,6 +7,7 @@ authorname: John Doe
 authorlink: john-doe
 date: 2021-09-21T15:22:21+05:30
 categories: ["tutorials"]
+image: images/the-second-post/hero.webp
 ---
 
 # Similar to the previous post
