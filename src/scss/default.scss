@@ -118,6 +118,14 @@ body {
         }
       }
     }
+
+    .author {
+      text-align: center;
+      border-top: 2px solid var(--secondary-fg);
+      border-bottom: 2px solid var(--secondary-fg);
+      padding: 1rem 0;
+      margin: 1rem 0;
+    }
   }
 
   footer {
