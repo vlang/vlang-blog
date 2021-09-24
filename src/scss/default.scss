@@ -16,41 +16,56 @@ body {
   background-color: var(--primary-bg);
   color: var(--primary-fg);
 
+  #hero {
+    margin: 2rem 1rem;
+  }
+
+  aside {
+    padding: 1rem;
+    line-height: 1.8rem;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: dotted underline;
+  }
+  a:hover {
+    opacity: 0.8;
+    text-decoration: solid underline;
+  }
+  a:visited {
+    color: var(--secondary-fg);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Jost", sans-serif;
+    margin: 2rem 0 0.5rem 0;
+  }
+
   main {
     padding: 1rem;
     line-height: 1.8rem;
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: "Jost", sans-serif;
-      margin: 2rem 0 0.5rem 0;
-    }
-
     figure {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
       img {
-        width: 80%;
+        margin: 2rem 5%;
+        width: 90%;
         border-radius: 5px;
       }
 
       figcaption {
         font-style: italic;
       }
-    }
-
-    a {
-      color: inherit;
-      text-decoration: dotted underline;
-    }
-    a:hover {
-      opacity: 0.8;
-      text-decoration: solid underline;
-    }
-    a:visited {
-      color: var(--secondary-fg);
     }
 
     ul.categories {
@@ -73,5 +88,27 @@ body {
 
   footer {
     text-align: center;
+  }
+}
+@media screen and (min-width: 960px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .horizontal {
+      display: flex;
+      flex-direction: row;
+    }
+
+    main {
+      max-width: 70ch;
+      width: 70%;
+    }
+
+    aside {
+      max-width: 35ch;
+      width: 30%;
+    }
   }
 }
