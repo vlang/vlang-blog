@@ -7,7 +7,9 @@
   {{ with .Params.categories }} {{ range . }}
   <!--  -->
   {{ $href := print (absURL "categories/") (urlize .) }}
-  <li><a href="{{ $href }}/">{{ . }}</a></li>
+  <li>
+    <a href="{{ $href }}/"><div class="category {{ .}}">{{ . }}</div></a>
+  </li>
   {{ end }}
 </ul>
 {{ end }} {{ end }} {{ $authorlink := .File.BaseFileName }} {{ .Content }}

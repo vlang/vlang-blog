@@ -3,9 +3,18 @@
   margin: 0;
   padding: 0;
 }
+:root {
+  --primary-fg: #262626;
+  --secondary-fg: #353535;
+  --primary-bg: #fefefe;
+  --secondary-bg: #eee;
+  --news-category: #d7e9f8;
+}
 body {
   font-size: 18px;
   font-family: "IBM Plex Sans", sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--primary-fg);
 
   main {
     padding: 1rem;
@@ -29,6 +38,35 @@ body {
 
       figcaption {
         font-style: italic;
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: dotted underline;
+    }
+    a:hover {
+      opacity: 0.8;
+      text-decoration: solid underline;
+    }
+    a:visited {
+      color: var(--secondary-fg);
+    }
+
+    ul.categories {
+      list-style: none;
+      display: flex;
+
+      li {
+        .category {
+          border: 2px solid var(--primary-fg);
+          border-radius: 5px;
+          padding: 3px 10px;
+        }
+
+        .news {
+          background-color: var(--news-category);
+        }
       }
     }
   }
