@@ -9,6 +9,8 @@
   --primary-bg: #fefefe;
   --secondary-bg: #eee;
   --news-category: #d7e9f8;
+  --tutorials-category: #f3d8b4;
+  --showcase-category: #f3b4c7;
 }
 body {
   font-size: 18px;
@@ -81,6 +83,14 @@ body {
 
         .news {
           background-color: var(--news-category);
+        }
+
+        .tutorials {
+          background-color: var(--tutorials-category);
+        }
+
+        .showcase {
+          background-color: var(--showcase-category);
         }
       }
     }
