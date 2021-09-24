@@ -7,4 +7,4 @@ npm run ss
 npm run ts
 
 # Generate the website
-hugo
+hugo --minify
