@@ -52,5 +52,16 @@
 <div class="author">
   Article by
   <a href="/people/{{ .Params.authorlink }}">{{ .Params.authorname }}</a>
+
+  <!-- We add the date of publication -->
+  {{ $dateTime := .Params.date.Format "2006-01-02" }}
+  <!-- The dateformat is always generated against 2006/01/02 -->
+  {{ $dateFormat := .Site.Params.DateFormat | default "January 2, 2006" }}
+  <div class="timesection">
+    Published on
+    <time datetime="{{ $dateTime }}">
+      {{ .Params.date.Format $dateFormat }}
+    </time>
+  </div>
 </div>
 {{ end }} {{ end }}
