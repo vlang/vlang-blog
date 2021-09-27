@@ -4,6 +4,8 @@
   padding: 0;
 }
 :root {
+  // CSS Variables obtained from:
+  // https://github.com/vlang/v/blob/master/cmd/tools/vdoc/resources/doc.css
   --primary-fg: #262626;
   --secondary-fg: #353535;
   --primary-bg: #fefefe;
@@ -14,12 +16,61 @@
 }
 body {
   font-size: 18px;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "PT Serif", serif;
   background-color: var(--primary-bg);
   color: var(--primary-fg);
 
   #hero {
     margin: 2rem 1rem;
+  }
+
+  #logo {
+    display: block;
+    width: 35px;
+    height: 35px;
+    background-image: url("/ms-icon-70x70.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--secondary-bg);
+    padding: 1rem;
+
+    #right-container {
+      display: flex;
+    }
+
+    ul {
+      list-style-type: none;
+      display: flex;
+
+      > li {
+        margin: 1rem;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        background-color: var(--secondary-bg);
+
+        top: 2.5rem;
+        left: -1rem;
+
+        ul {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      .dropdown-item {
+        position: relative;
+      }
+    }
   }
 
   aside {
@@ -72,6 +123,10 @@ body {
       line-height: 1.8rem;
     }
 
+    li {
+      margin-left: 1.5rem;
+    }
+
     figure {
       width: 100%;
       display: flex;
@@ -81,7 +136,7 @@ body {
       img {
         margin: 2rem 5%;
         width: 90%;
-        border-radius: 5px;
+        border-radius: 2px;
       }
 
       figcaption {
@@ -100,8 +155,7 @@ body {
 
       li {
         .category {
-          border: 2px solid var(--primary-fg);
-          border-radius: 5px;
+          border-radius: 2px;
           padding: 3px 10px;
         }
 
@@ -141,11 +195,31 @@ body {
     text-align: center;
   }
 }
+@media screen and (max-width: 960px) {
+  #mobile-navlinks {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+  #desktop-navlinks {
+    display: none;
+  }
+}
 @media screen and (min-width: 960px) {
   body {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    #mobile-navlinks {
+      display: none;
+    }
+    #desktop-navlinks {
+      display: flex;
+    }
 
     .horizontal {
       display: flex;
