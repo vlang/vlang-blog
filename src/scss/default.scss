@@ -241,10 +241,16 @@ body {
     display: block;
     position: absolute;
     background-color: var(--menu-background-color);
+    color: var(--menu-text-color);
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
   }
   #desktop-navlinks {
     display: none;
