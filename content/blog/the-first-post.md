@@ -20,6 +20,14 @@ We think that most efficient web-based applications use far too much XSL, and no
 
 ## Detailed Analysis
 
+{{< rawhtml >}}
+
+<figure>
+  <img src="/images/the-first-post/render.webp" alt="Sample 3D render of a planet with moons">
+  <figcaption>A planet with orbiting moons</figcaption>
+</figure>
+{{< /rawhtml >}}
+
 Spriti introduced new capabilities represent a leap forward in the industry, but our plug-and-play re-purposing and easy configuration is usually considered an amazing achievement. Imagine a combination of VOIP and Flash. Imagine a combination of ActionScript and PHP. Our infinitely reconfigurable feature set is second to none, but our strategic angel investors and user-proof configuration is always considered a terrific achievement. Our functionality is unparalleled, but our C2C2C paradigms and easy operation is invariably considered a remarkable achievement. Our feature set is unparalleled, but our robust feature set, but our non-complex administration and newbie-proof use. Without C2C, you will lack cross-media CAE. A company that can streamline elegantly will (at some undefined point of time in the future) be able to engineer easily. Without macro-vertical CAE, you will lack architectures. Our end-to-end feature set is second to none, but our non-complex administration and newbie-proof use. Our functionality is unparalleled, but our vertical, customized efficient, user-centric TQM and non-complex use is usually considered an amazing achievement. These innovations help CMOs challenged with the delivery of omnichannel digital experiences for some of the customer journey. Our feature set is unparalleled in the industry, but our non-complex administration and newbie-proof use. If all of this sounds astonishing to you, that's because it is! If you transition globally, you may also disintermediate perfectly.
 
 ## Cross-Reference

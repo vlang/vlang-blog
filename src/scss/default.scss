@@ -176,12 +176,13 @@ body {
       align-items: center;
 
       img {
-        margin: 2rem 5%;
+        margin: 2rem 5% 1.5rem 5%;
         width: 90%;
         border-radius: 2px;
       }
 
       figcaption {
+        margin-bottom: 1rem;
         font-style: italic;
       }
     }
