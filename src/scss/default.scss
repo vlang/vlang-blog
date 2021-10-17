@@ -6,10 +6,10 @@
 :root {
   // CSS Variables obtained from:
   // https://github.com/vlang/v/blob/master/cmd/tools/vdoc/resources/doc.css
-  --background-color: #fff;
+  --background-color: #f8f8f8;
   --link-color: #2779bd;
   --link-visited: #083c66;
-  --text-color: #000;
+  --text-color: #222;
   --menu-background-color: #4b6c88;
   --menu-text-color: #fff;
   // Helper variables that are used to adapt the default variables to this website's configuration.
@@ -234,7 +234,17 @@ body {
   }
 
   footer {
+    width: 100%;
+    font-family: "Jost", sans-serif;
+    color: #eee;
+    padding-top: 1rem;
     text-align: center;
+
+    .copyright {
+      padding: 0.5rem 0;
+      width: 100%;
+      background-color: #222;
+    }
   }
 }
 @media screen and (max-width: 960px) {
