@@ -233,6 +233,16 @@ body {
     }
   }
 
+  .highlight {
+    margin: 1rem auto;
+    overflow-x: scroll;
+    line-height: 1.8rem;
+    pre {
+      padding: 1rem;
+      width: max-content;
+    }
+  }
+
   footer {
     width: 100%;
     font-family: "Jost", sans-serif;
