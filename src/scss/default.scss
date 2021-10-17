@@ -243,6 +243,13 @@ body {
     }
   }
 
+  blockquote {
+    background-color: var(--secondary-bg);
+    padding: 1rem;
+    border-left: 2px solid var(--primary-fg);
+    margin: 1rem 0;
+  }
+
   footer {
     width: 100%;
     font-family: "Jost", sans-serif;
