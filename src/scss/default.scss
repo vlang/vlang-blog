@@ -28,7 +28,16 @@ body {
   color: var(--primary-fg);
 
   #hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 2rem 1rem;
+
+    #hero-veasel {
+      margin: 0 auto;
+      width: 200px;
+      pointer-events: none;
+    }
   }
 
   #logo {
@@ -257,15 +266,17 @@ body {
   }
 
   footer {
+    margin-top: 3rem;
     width: 100%;
     font-family: "Jost", sans-serif;
     padding-top: 1rem;
     text-align: center;
+    background-color: var(--secondary-bg);
 
     nav {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
 
       ul {
@@ -275,17 +286,33 @@ body {
         align-items: center;
         justify-items: center;
         list-style-type: none;
-        li {
-          padding: 1ch 1rem;
-        }
       }
     }
 
     .copyright {
       padding: 0.5rem 0;
       color: #eee;
+      a {
+        color: #aaa;
+        text-decoration: none;
+      }
       width: 100%;
       background-color: #222;
+    }
+
+    .icons {
+      padding: 0.5rem;
+      a {
+        display: inline-block;
+        margin: 1rem;
+        color: inherit;
+      }
+    }
+
+    #footer-veasel {
+      width: 100px;
+      opacity: 0.4;
+      pointer-events: none;
     }
   }
 }
@@ -346,8 +373,11 @@ body {
 
     footer {
       nav {
+        flex-direction: row;
         ul {
-          flex-direction: row;
+          margin: 0 2rem;
+          width: auto;
+          align-items: flex-start;
         }
       }
     }
