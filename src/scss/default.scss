@@ -50,6 +50,10 @@ body {
     padding: 1rem;
     font-family: "Jost", sans-serif;
 
+    a {
+      text-decoration: none;
+    }
+
     #right-container {
       display: flex;
       align-items: center;
