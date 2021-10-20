@@ -259,12 +259,31 @@ body {
   footer {
     width: 100%;
     font-family: "Jost", sans-serif;
-    color: #eee;
     padding-top: 1rem;
     text-align: center;
 
+    nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      ul {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        list-style-type: none;
+        li {
+          padding: 1ch 1rem;
+        }
+      }
+    }
+
     .copyright {
       padding: 0.5rem 0;
+      color: #eee;
       width: 100%;
       background-color: #222;
     }
@@ -323,6 +342,14 @@ body {
     aside {
       max-width: 35ch;
       width: 30%;
+    }
+
+    footer {
+      nav {
+        ul {
+          flex-direction: row;
+        }
+      }
     }
   }
 }
