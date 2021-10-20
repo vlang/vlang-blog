@@ -352,6 +352,7 @@ body {
     .horizontal {
       display: flex;
       flex-direction: row;
+      justify-content: center;
     }
 
     main {
@@ -363,12 +364,11 @@ body {
         line-height: 2.4rem;
       }
       margin: 0 3rem;
-      width: 70%;
+      width: 60%;
     }
 
     aside {
-      max-width: 35ch;
-      width: 30%;
+      width: 20%;
     }
 
     footer {
