@@ -122,6 +122,7 @@ body {
   a {
     color: var(--link-color);
     text-decoration: dotted underline;
+    transition: opacity 100ms ease-in;
   }
   a:hover,
   a:focus {
@@ -304,13 +305,31 @@ body {
     }
 
     main {
-      max-width: 70ch;
+      p,
+      ol,
+      ul,
+      li {
+        font-size: 1.4rem;
+        line-height: 2.4rem;
+      }
+      margin: 0 3rem;
       width: 70%;
     }
 
     aside {
       max-width: 35ch;
       width: 30%;
+    }
+  }
+}
+@media screen and (min-width: 1600px) {
+  main {
+    p,
+    ol,
+    ul,
+    li {
+      font-size: 1.6rem;
+      line-height: 3rem;
     }
   }
 }
