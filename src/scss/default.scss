@@ -110,6 +110,8 @@ body {
         top: 2.5rem;
         left: -1rem;
 
+        transition: opacity 150ms ease-in-out;
+
         ul {
           display: flex;
           flex-direction: column;
