@@ -6,9 +6,11 @@
     <main>
       <article>{{ block "main" .}}{{ end }}</article>
     </main>
-    {{ partial "footer.html" . }} {{ partial "script.html" }}
+    {{ partial "footer.html" . }}
     <!-- Include KaTeX if necessary -->
     {{ if .Params.katex }} {{ partial "katex.html" . }} {{ end }}
     {{ partial "mobilenav.html" }}
+    <!-- Include scripts -->
+    {{ partial "script.html" .}}
   </body>
 </html>
