@@ -1,6 +1,6 @@
 {{ define "main" }}
 <h1 class="title">{{ .Title | markdownify }}</h1>
-<p class="subtitle">{{ .Params.subtitle | markdownify }}</p>
+<p class="subtitle top-border">{{ .Params.subtitle | markdownify }}</p>
 <!-- Append categories if necessary -->
 {{ if eq .Params.Page "Blog" }}
 <ul class="categories">
