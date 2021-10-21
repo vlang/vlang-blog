@@ -37,6 +37,7 @@ body {
       margin: 0 auto;
       width: 200px;
       pointer-events: none;
+      transform: translateX(15%);
     }
   }
 
@@ -61,6 +62,17 @@ body {
 
     a {
       text-decoration: none;
+    }
+
+    #left-container {
+      display: flex;
+      align-items: center;
+      #blog-title {
+        margin-left: 15px;
+        font-size: 1.5rem;
+        font-family: "Jost", sans-serif;
+        font-weight: bold;
+      }
     }
 
     #right-container {
@@ -159,17 +171,21 @@ body {
     margin: 2rem 0 0.5rem 0;
   }
 
+  .top-border {
+    border-top: 2px solid var(--secondary-fg);
+    margin-top: 2rem;
+  }
+
   .title {
     font-size: 3rem;
     text-align: center;
   }
+
   .subtitle {
     text-align: center;
     padding-top: 1rem;
     font-style: italic;
     line-height: normal;
-    border-top: 2px solid var(--secondary-fg);
-    margin-top: 2rem;
   }
 
   main {
