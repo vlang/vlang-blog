@@ -123,6 +123,9 @@ body {
         left: -1rem;
 
         transition: opacity 150ms ease-in-out;
+        border-bottom: 2px solid var(--primary-fg);
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
 
         ul {
           display: flex;
@@ -280,6 +283,7 @@ body {
     background-color: var(--secondary-bg);
     padding: 1rem;
     border-left: 2px solid var(--primary-fg);
+    border-radius: 2px;
     margin: 1rem 0;
   }
 
