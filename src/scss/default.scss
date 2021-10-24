@@ -3,23 +3,45 @@
   margin: 0;
   padding: 0;
 }
+html.transition,
+html.transition *,
+html.transition *::before,
+html.transition *::after {
+  transition: all 200ms linear !important;
+  transition-delay: 0 !important;
+}
 :root {
   // CSS Variables obtained from:
   // https://github.com/vlang/v/blob/master/cmd/tools/vdoc/resources/doc.css
   --background-color: #f8f8f8;
-  --link-color: #2779bd;
-  --link-visited: #083c66;
+  --secondary-background-color: #eee;
+  --dark-background-color: #1a202c;
+  --secondary-dark-background-color: #1b1e24;
   --text-color: #222;
+  --secondary-text-color: #353535;
   --menu-background-color: #4b6c88;
   --menu-text-color: #fff;
-  // Helper variables that are used to adapt the default variables to this website's configuration.
-  --primary-fg: var(--text-color);
-  --secondary-fg: #222;
-  --primary-bg: var(--background-color);
-  --secondary-bg: #eee;
   --news-category: #d7e9f8;
   --tutorials-category: #f3d8b4;
   --showcase-category: #f3b4c7;
+  --copyright-text: #eee;
+  --global-border-radius: 2px;
+}
+html[data-theme="light"] {
+  --primary-fg: var(--text-color);
+  --secondary-fg: var(--secondary-text-color);
+  --primary-bg: var(--background-color);
+  --secondary-bg: var(--secondary-background-color);
+  --link-color: #2779bd;
+  --link-visited: #083c66;
+}
+html[data-theme="dark"] {
+  --primary-fg: var(--background-color);
+  --secondary-fg: var(--secondary-background-color);
+  --primary-bg: var(--dark-background-color);
+  --secondary-bg: var(--secondary-dark-background-color);
+  --link-color: #77b5e9;
+  --link-visited: #3b93db;
 }
 body {
   font-size: 18px;
@@ -197,9 +219,9 @@ body {
         left: -1rem;
 
         transition: opacity 150ms ease-in-out;
-        border-bottom: 2px solid var(--primary-fg);
-        border-bottom-left-radius: 2px;
-        border-bottom-right-radius: 2px;
+        border-bottom: var(--global-border-radius) solid var(--primary-fg);
+        border-bottom-left-radius: var(--global-border-radius);
+        border-bottom-right-radius: var(--global-border-radius);
 
         ul {
           display: flex;
@@ -249,12 +271,12 @@ body {
   }
 
   .top-border {
-    border-top: 2px solid var(--secondary-fg);
+    border-top: var(--global-border-radius) solid var(--secondary-fg);
     margin-top: 2rem;
   }
 
   .bottom-border {
-    border-bottom: 2px solid var(--secondary-fg);
+    border-bottom: var(--global-border-radius) solid var(--secondary-fg);
     padding-bottom: 1rem;
   }
 
@@ -292,7 +314,7 @@ body {
       img {
         margin: 2rem 5% 1.5rem 5%;
         width: 90%;
-        border-radius: 2px;
+        border-radius: var(--global-border-radius);
       }
 
       figcaption {
@@ -310,8 +332,12 @@ body {
 
       li {
         .category {
-          border-radius: 2px;
+          border-radius: var(--global-border-radius);
           padding: 3px 10px;
+        }
+        a {
+          // text-decoration: none;
+          color: #222;
         }
 
         .news {
@@ -339,8 +365,6 @@ body {
     .author {
       font-size: 1.5rem;
       text-align: center;
-      border-top: 2px solid var(--secondary-fg);
-      border-bottom: 2px solid var(--secondary-fg);
       padding: 1rem 0;
       margin: 1rem 0;
     }
@@ -350,6 +374,8 @@ body {
     margin: 1rem auto;
     overflow-x: scroll;
     line-height: 1.8rem;
+    border-radius: var(--global-border-radius);
+    color: var(--text-color);
     pre {
       padding: 1rem;
       width: max-content;
@@ -359,8 +385,8 @@ body {
   blockquote {
     background-color: var(--secondary-bg);
     padding: 1rem;
-    border-left: 2px solid var(--primary-fg);
-    border-radius: 2px;
+    border-left: var(--global-border-radius) solid var(--primary-fg);
+    border-radius: var(--global-border-radius);
     margin: 1rem 0;
   }
 
@@ -387,7 +413,7 @@ body {
 
     .copyright {
       padding: 0.5rem 0;
-      color: #eee;
+      color: var(--copyright-text);
       a {
         color: #aaa;
         text-decoration: none;
