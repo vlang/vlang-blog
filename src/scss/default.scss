@@ -145,12 +145,12 @@ body {
       position: relative;
       border: none;
       background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       svg {
         position: absolute;
-        top: 4px;
-        left: 4px;
-
         transition: opacity 150ms ease-in-out;
       }
       svg.active {
@@ -164,9 +164,6 @@ body {
 
     #mobile-menu-toggle-button {
       z-index: 990;
-      display: flex;
-      align-items: center;
-      justify-content: center;
 
       .burger {
         position: absolute;
