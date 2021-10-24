@@ -1,9 +1,12 @@
 {{ define "main" }}
 <h1 class="title">{{ .Title | markdownify }}</h1>
-<p class="subtitle top-border">{{ .Params.subtitle | markdownify }}</p>
+{{ if eq .Params.Page "Blog" }}
+<div class="top-border"></div>
+{{ end }}
+<p class="subtitle">{{ .Params.subtitle | markdownify }}</p>
 <!-- Append categories if necessary -->
 {{ if eq .Params.Page "Blog" }}
-<ul class="categories">
+<ul class="categories bottom-border">
   {{ with .Params.categories }} {{ range . }}
   <!--  -->
   {{ $href := print (absURL "categories/") (urlize .) }}
