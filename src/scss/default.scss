@@ -7,7 +7,7 @@ html.transition,
 html.transition *,
 html.transition *::before,
 html.transition *::after {
-  transition: all 200ms linear !important;
+  transition: all 150ms linear !important;
   transition-delay: 0 !important;
 }
 :root {
@@ -151,7 +151,6 @@ body {
         top: 4px;
         left: 4px;
 
-        opacity: 0;
         transition: opacity 150ms ease-in-out;
       }
       svg.active {
@@ -198,6 +197,10 @@ body {
       #bar3.is-active {
         transform: rotate(-135deg);
       }
+    }
+
+    .hidden-icon {
+      opacity: 0;
     }
 
     ul {
