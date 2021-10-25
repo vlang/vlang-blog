@@ -14,7 +14,8 @@
   },
   "markup": {
     "highlight": {
-      "style": "friendly"
+      "style": "friendly",
+      "tabWidth": 2
     }
   }
 }

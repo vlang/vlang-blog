@@ -377,9 +377,10 @@ body {
     border-radius: var(--global-border-radius);
     color: var(--text-color);
     pre {
-      padding: 1rem;
+      padding: 1rem 0;
       width: max-content;
     }
+    
   }
 
   blockquote {
