@@ -13,8 +13,8 @@ image: images/getting-started-with-v/hero.webp
 ## Introduction
 
 V is a simple, fast, safe, compiled general purpose programming language
-for developing maintainable software. There are several compelling reasons for using V
-which can learn more about here: [The V Programming Language](https://vlang.io/)
+for developing maintainable software. There are several compelling reasons for using V,
+which you can learn more about here: [The V Programming Language](https://vlang.io/)
 
 In this post, we focus on getting new users up to speed so that they can start
 working with V right away.
@@ -53,7 +53,8 @@ V provides a convenient solution to this.
 # On Linux, Mac OS, and other similar systems
 sudo ./v symlink
 
-# On Windows, from the terminal with administrative privileges
+# On Windows, open an Administrator shell and run the following.
+# NOTE: This is the ONLY command that neeeds to be run from an Administrator shell.
 .\v.exe symlink
 ```
 
@@ -78,7 +79,8 @@ main concepts can be learned over a weekend.
 The official documentation for the language is written in a single markdown document:
 [V Documentation](https://github.com/vlang/v/blob/master/doc/docs.md).
 
-The documentation for all of the modules included in the V standard library (vlib) [vlib Documentation](https://modules.vlang.io/). You are encouraged to use
+The documentation for all of the modules included in the V standard library (vlib) is
+available here: [vlib Documentation](https://modules.vlang.io/). You are encouraged to use
 the search bar to find the functions and structs you need for your project.
 
 For a taste of V here is a truncated example of TOML file parsing. The sample TOML file is
@@ -125,8 +127,10 @@ For help with other editors, please join our [Discord Server](https://discord.gg
 
 ### Language Server
 
-The [V Language Server](https://github.com/vlang/vls) (WIP) is an LSP compatible language server.
-The VSCode extension should be able to automatically download and instal VLS. In case of errors,
+The [V Language Server](https://github.com/vlang/vls) (WIP) is an
+[LSP](https://microsoft.github.io/language-server-protocol/)
+compatible language server. The VSCode extension should be able to automatically
+download and instal VLS. In case of errors,
 check out the [pre-built binaries](https://github.com/vlang/vls/releases), or
 [build VLS from source](https://github.com/vlang/vls#build-from-source). If your find any bugs,
 get them confirmed in the **#vls** channel on our server and then report them on [Github](https://github.com/vlang/vls/issues). We are also open to contributions!
@@ -148,5 +152,4 @@ If you want to get specific help, reach out to us directly, or just hang out wit
 the V community members, join our [Discord Server](https://discord.gg/vlang). Use the
 appropriate channels for your needs.
 
-There may be bugs you encounter while developing in V. Report them in the **#bugs**
-channel and then report them on [Github](https://github.com/vlang/v/issues).
+While developing in V, you may encounter bugs. Please report them in the **#bugs** channel, and file [Github issues](https://github.com/vlang/v/issues) about them with `v bug file.v`.
