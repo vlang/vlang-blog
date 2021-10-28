@@ -42,6 +42,9 @@ html[data-theme="dark"] {
   --secondary-bg: var(--secondary-dark-background-color);
   --link-color: #77b5e9;
   --link-visited: #3b93db;
+  pre {
+    filter: invert(100%);
+  }
 }
 body {
   font-size: 18px;
@@ -305,6 +308,10 @@ body {
       margin-left: 1.5rem;
     }
 
+    p {
+      margin-bottom: 1rem;
+    }
+
     figure {
       width: 100%;
       display: flex;
@@ -371,16 +378,23 @@ body {
   }
 
   .highlight {
+    font-size: 1rem;
     margin: 1rem auto;
-    overflow-x: scroll;
+    overflow-x: auto;
     line-height: 1.8rem;
     border-radius: var(--global-border-radius);
     color: var(--text-color);
     pre {
       padding: 1rem 0;
+      padding-left: 1rem;
+      min-width: 100%;
       width: max-content;
     }
-    
+    table {
+      pre {
+        padding-left: 0;
+      }
+    }
   }
 
   blockquote {
