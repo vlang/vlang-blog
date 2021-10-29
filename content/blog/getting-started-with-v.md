@@ -115,6 +115,16 @@ fn main() {
 
 Source code: [toml.v](https://github.com/vlang/v/blob/master/examples/toml.v)
 
+### Running a V Program
+
+Your project should have at least one `main` function. Then you can compile and run
+you code in one of two ways:
+
+1. Directly run the program with `v run file.v` or `v run directory`.
+   You can even to `v run .` to run the only main function in the directory.
+2. Compile the program with `v file.v` (optionally as `v -prod file.v`) and then run
+   the generated executable.
+
 ## Setting up your Development Environment
 
 ### Code Editor
@@ -139,8 +149,9 @@ get them confirmed in the **#vls** channel on our server and then report them on
 
 You need `git` to clone and update V. Make sure that it is installed on your machine.
 
-Additionally, use `v fmt -w /path/` to automatically format your source code.
-Consult `v help fmt` for more information.
+Additionally, use `v new` and `v init` as necessary, and use `v fmt -w /path/`
+to automatically format your source code. Consult `v help init` and `v help fmt`
+for more information.
 
 ## Getting Help and Reaching Out
 
