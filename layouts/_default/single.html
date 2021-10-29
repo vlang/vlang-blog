@@ -67,4 +67,6 @@
     </time>
   </div>
 </div>
-{{ end }} {{ end }}
+{{ if eq .Params.Page "Blog" }}
+<div class="giscus"></div>
+{{ end }} {{ end }} {{ end }}
