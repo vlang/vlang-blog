@@ -126,6 +126,10 @@ body {
       text-decoration: none;
     }
 
+    i {
+      margin-right: 10px;
+    }
+
     #left-container {
       display: flex;
       align-items: center;
@@ -227,6 +231,7 @@ body {
         border-bottom-right-radius: var(--global-border-radius);
 
         ul {
+          width: max-content;
           display: flex;
           flex-direction: column;
         }
