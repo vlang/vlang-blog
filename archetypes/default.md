@@ -5,6 +5,7 @@ summary:
 page: Blog
 authorname:
 authorlink:
+categories: []
 date: {{ .Date }}
 image:
 ---
