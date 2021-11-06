@@ -7,9 +7,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <title>{{ .Title | markdownify }} | The V Programming Language</title>
-  <meta name="title" content="{{ .Title | markdownify }}" />
-  <meta property="og:title" content="{{ .Title | markdownify }}" />
-  <meta property="twitter:title" content="{{ .Title | markdownify }}" />
+  <meta name="title" content="{{ .Title | markdownify }} | The V Programming Language" />
+  <meta property="og:title" content="{{ .Title | markdownify }} | The V Programming Language" />
+  <meta property="twitter:title" content="{{ .Title | markdownify }} | The V Programming Language" />
 
   <meta property="og:type" content="website" />
   <meta property="twitter:card" content="summary_large_image" />
@@ -22,8 +22,8 @@
   <meta property="twitter:url" content="{{ .Permalink }}" />
 
   {{ if .Params.image }}
-  <meta property="og:image" content="{{ .Params.image }}" />
-  <meta property="twitter:image" content="{{ .Params.image }}" />
+  <meta property="og:image" content="/{{ .Params.image }}" />
+  <meta property="twitter:image" content="/{{ .Params.image }}" />
   {{ end }}
 
   <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
