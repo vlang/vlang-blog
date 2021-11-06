@@ -31,8 +31,8 @@
   <meta property="twitter:url" content="{{ .Permalink }}" />
 
   {{ if .Params.image }}
-  <meta property="og:image" content="{{ .Params.image | absURL }}" />
-  <meta property="twitter:image" content="{{ .Params.image | absURL }}" />
+  <meta property="og:image" content="{{ .Site.BaseURL }}/{{ .Params.image }}" />
+  <meta property="twitter:image" content="{{ .Site.BaseURL }}/{{ .Params.image }}" />
   {{ end }}
 
   <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
