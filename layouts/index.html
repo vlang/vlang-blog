@@ -18,7 +18,7 @@
       <main>
         <div id="latest">
           <h2>Latest</h2>
-          {{ range .Site.Pages }} {{ if in .Permalink "blog" }}
+          {{ range .Site.Pages }} {{ if eq .Params.Page "Blog" }}
           <!-- Select the Blog Post Page/Folder -->
           {{ range first 2 .Pages.ByPublishDate.Reverse }}
           <!-- Select the two most recent blog posts -->
