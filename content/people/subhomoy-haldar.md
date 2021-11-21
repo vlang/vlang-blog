@@ -16,4 +16,4 @@ Subhomoy Haldar ([@hungrybluedev](https://github.com/hungrybluedev)) is one of t
 
 1. Website: [hungrybluedev.in](https://hungrybluedev.in/)
 2. Twitter: [@hungrybluedev](https://twitter.com/hungrybluedev)
-3. Github: [hungrybluedev](https://github.com/hungrybluedev)
+3. GitHub: [hungrybluedev](https://github.com/hungrybluedev)
