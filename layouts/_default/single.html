@@ -26,11 +26,10 @@
 <!-- Append list of posts by author if necessary -->
 {{ if eq .Params.Page "People" }}
 <h1>Posts by {{ .Title | markdownify }}</h1>
-{{ range .Site.Pages }}
+{{ range .Site.Pages.ByPublishDate.Reverse }}
 <!-- Iterate over all top level pages -->
-{{ if in .Permalink "blog" }}
+{{ if eq .Params.Page "Blog" }}
 <!-- We are interested only in the blog posts -->
-{{ range .Pages.ByPublishDate.Reverse }}
 <!-- Process latest posts first -->
 {{ if eq .Params.authorlink $authorlink }}
 <div class="post">
@@ -49,7 +48,7 @@
   </figure>
   {{ else }}
   <p>{{ .Params.summary | markdownify }}</p>
-  {{ end }} {{ end }} {{ end }}
+  {{ end }} {{ end }}
 </div>
 {{ end }} {{ end }} {{ end }} {{ if .Params.authorname }}
 <div class="author top-border bottom-border">

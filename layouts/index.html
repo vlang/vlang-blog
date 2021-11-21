@@ -18,10 +18,9 @@
       <main>
         <div id="latest">
           <h2>Latest</h2>
-          {{ range .Site.Pages }} {{ if eq .Params.Page "Blog" }}
-          <!-- Select the Blog Post Page/Folder -->
-          {{ range first 2 .Pages.ByPublishDate.Reverse }}
-          <!-- Select the two most recent blog posts -->
+          {{ range first 10 .Site.Pages.ByPublishDate.Reverse }}
+          <!-- Select the blog posts only -->
+          {{ if eq .Params.Page "Blog" }}
           <div class="post">
             <h3>
               <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
@@ -41,7 +40,7 @@
             {{ end }}
           </div>
           <!-- Summary of the posts -->
-          {{ end }} {{ end }} {{ end }}
+          {{ end }} {{ end }}
         </div>
         More posts available <a href="/blog/">here</a>.
       </main>
