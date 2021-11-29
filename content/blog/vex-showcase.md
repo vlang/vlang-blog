@@ -45,7 +45,7 @@ project folder and then do `v init`.
 Then navigate to the **`v.mod`** file and add `'nedpals.vex'` to the dependency
 list. Your file should look something like this:
 
-```toml {linenos=table}
+```text {linenos=table}
 Module{
 	name: 'vex_example'
 	description: 'A project that showcases the Vex web framework.'
@@ -102,7 +102,9 @@ see something like this:
 {{< rawhtml >}}
 
 <figure>
-<img src="/images/vex-showcase/hello-world-vex.webp" alt="">  
+<img
+src="/images/vex-showcase/hello-world-vex.webp"
+alt="Screenshot showing the text 'Hello, ned!' and the URL is localhost:8080/users/ned">
 <figcaption>Hello World in Vex</figcaption>
 </figure>
 
@@ -142,11 +144,309 @@ based on a set of parameters.
 
 ### API Design
 
+We will expose two endpoints in the app.
+
+1. The homepage is a static HTML page which will be served at the
+   root `/` as the homepage.
+2. An application endpoint at `/:generator` where the generator can be one
+   of the supported PRNGs present in
+   [vlib](https://modules.vlang.io/rand.html).
+   It will also take query parameters that control the nature of output.
+
 ### Code
+
+The complete and updated source code for this project is available
+[here](https://github.com/hungrybluedev/vex-random-api).
+
+Here is a brief description of all the files.
+
+`v.mod` is the same as we already have. It lists `nedpals.vex` as a
+dependency. Link to full
+[source code](https://github.com/hungrybluedev/vex-random-api/blob/main/v.mod).
+
+`vex_example.v` (or whatever you named your project) will contain
+the `main` function. Inside the main function, we define the `app`,
+and the various routes that it will be able to accept. Here is a
+_condensed version_:
+
+```v
+module main
+
+// imports
+
+// constants
+
+struct APIResult {
+	title       string
+	description string
+	value       string
+}
+
+// valdation function
+
+fn main() {
+	mut app := router.new()
+
+	// Serve the static files first
+	app.route(.get, '/', fn (req &ctx.Req, mut res ctx.Resp) {
+		res.send_file('static/index.html', 200)
+	})
+
+	app.route(.get, '/style.css', fn (req &ctx.Req, mut res ctx.Resp) {
+		res.send_file('static/style.css', 200)
+	})
+
+	// Handle PRNG API requests
+	app.route(.get, '/:generator', fn (req &ctx.Req, mut res ctx.Resp) {
+		query_parameters := req.parse_query() or { defaults }
+
+		min := validate('min', query_parameters)
+		max := validate('max', query_parameters)
+		float := validate('float', query_parameters)
+		json := validate('json', query_parameters)
+
+		generator := req.params['generator']
+
+		result := generate_random_number(
+			generator: generator
+			min: min
+			max: max
+			float: float == 'true'
+		)
+
+		if json == 'true' {
+			res.send_json(result, 200)
+		} else {
+			if result.value == '' {
+				content := [
+					html.tag(
+						name: 'p'
+						text: 'An error occured.'
+					),
+					html.tag(
+						name: 'pre'
+						text: result.description
+					),
+				]
+				res.send_html(layout(result, content).html(), 200)
+			} else {
+				normalised_max := if max == '-1' { 'unspecified' } else { max }
+
+				content := [
+					// list of html.tag()'s
+				]
+				res.send_html(layout(result, content).html(), 200)
+			}
+		}
+	})
+
+	server.serve(app, port)
+}
+```
+
+For the full updated source code, refer to
+[this file](https://github.com/hungrybluedev/vex-random-api/blob/main/vex_example.v).
+
+`layout.v` is in the same directory as the rest of the code. By default,
+all files in the root directory (which contains `v.mod` as an anchor)
+are considered to belong to the `main` module. All functions in all
+files are accessible to other files in the same module (directory).
+If the function (and constants) are declared public with `pub`, then
+they are accessible outside the module as well.
+
+This file contains the `layout` function that takes in a list of
+`html.Tag` structs and properly formats them into a tree of tags.
+The tree is then rendered into semantic HTML (by Vex) and returned
+as the result of a GET request. A truncated version of the code follows:
+
+```v
+module main
+
+import nedpals.vex.html
+
+fn layout(result APIResult, content []html.Tag) html.Tag {
+	title_text := '$result.title | Vex Random Number API'
+	return html.html([
+		html.block(
+			name: 'head'
+			children: [
+				// meta tags
+			]
+		),
+		html.block(
+			name: 'body'
+			children: [
+				html.block(
+					name: 'header'
+					children: [
+						html.tag(
+							name: 'h1'
+							attr: {
+								'id': 'hero-heading'
+							}
+							text: result.title
+						),
+					]
+				),
+				html.block(
+					name: 'main'
+					children: content
+				),
+			]
+		),
+	])
+}
+```
+
+The complete version of the code is available
+[here](https://github.com/hungrybluedev/vex-random-api/blob/main/layout.v).
+
+Finally, we have `generate.v` which is responsible for generating the
+pseudorandom numbers based on the given options. We leverage the
+in-built `rand` module (and its submodules) for this. This file makes use
+of the **configuration struct** approach - V's recommended way for managing
+named parameter arguments. The struct `GeneratorConfigStruct` is
+initialised with the arguments necessary. The ones left uninitialised are
+assigned the default zero values. This is in-line with V's philosophy of
+avoiding undefined, nullable values as much as possible.
+
+The source for `generator.v` follows.
+
+```v {linenos=table}
+module main
+
+import rand
+import rand.seed
+import rand.wyrand
+import rand.mt19937
+import rand.splitmix64
+
+const generators = {
+	'rng': get_rng()
+	'mt':  get_mt()
+	'sm':  get_sm()
+}
+
+const generator_names = {
+	'rng': 'Default V RNG'
+	'mt':  'Mersenne Twister 19937'
+	'sm':  'Splittable Random from Java 8'
+}
+
+fn get_rng() rand.PRNG {
+	mut rng := wyrand.WyRandRNG{}
+	rng.seed(seed.time_seed_array(2))
+	return rng
+}
+
+fn get_mt() rand.PRNG {
+	mut rng := mt19937.MT19937RNG{}
+	rng.seed(seed.time_seed_array(2))
+	return rng
+}
+
+fn get_sm() rand.PRNG {
+	mut rng := splitmix64.SplitMix64RNG{}
+	rng.seed(seed.time_seed_array(2))
+	return rng
+}
+
+struct GeneratorConfigStruct {
+	generator string
+	min       string
+	max       string
+	float     bool
+}
+
+fn generate_random_number(config GeneratorConfigStruct) APIResult {
+	mut rng := generators[config.generator] or {
+		valid_generators := generators.keys().join(', ')
+		return APIResult{
+			title: 'Invalid generator'
+			description: 'An invalid generartor was specified. The valid generators are ${valid_generators}.'
+			value: ''
+		}
+	}
+	no_max := config.max == '-1'
+
+	if config.float {
+		range_min := config.min.f64()
+		mut value := 0.0
+		if no_max {
+			value = rng.f64() + range_min
+		} else {
+			range_max := config.max.f64()
+			value = rng.f64_in_range(range_min, range_max)
+		}
+
+		return APIResult{
+			title: 'Value: $value'
+			description: 'The server returned the value: $value'
+			value: value.str()
+		}
+	} else {
+		range_min := config.min.int()
+		mut value := 0
+		if no_max {
+			value = rng.int31() + range_min
+		} else {
+			range_max := config.max.int()
+			value = rng.int_in_range(range_min, range_max)
+		}
+
+		return APIResult{
+			title: 'Value: $value'
+			description: 'The server returned the value: $value'
+			value: value.str()
+		}
+	}
+}
+
+```
+
+Link to source
+[on GitHub](https://github.com/hungrybluedev/vex-random-api/blob/main/generate.v).
 
 ### Running The App
 
+Running the app is easy. In the root directory, run `v run .` to start
+the server.
+
+{{< rawhtml >}}
+
+<figure>
+<img
+src="/images/vex-showcase/vex-random-api-example.webp"
+alt="Screenshot showing a sample response of 4 returned by the API at the URL localhost:8080/min=1&max=10">  
+<figcaption>A sample response from the API</figcaption>
+</figure>
+
+{{< /rawhtml >}}
+
+If you want to change the port, add an environment variable `PORT` and set
+it to your desired port number. Alternately in bash (and related shells),
+you can start the server with `PORT=5555 v run .` which will set the
+environment variable and run the server in a single line.
+
+You do not need to have V installed if you want to deploy the app to a
+server. You can create an executable simply by running `v .` as a command.
+Additionally, you can create an optimised executable by running `v -prod .`,
+for which you need to have a dedicated C compiler like GCC, Clang, or
+MSVC installed. Make sure to compile the app on the same OS and architecture
+as the deployment target. Then you can take the executable and just run it.
+No other dependencies required.
+
 ## Closing Thoughts
+
+Vex is a very simple framework and it takes very little effort to start
+being productive with it. It leverages several features of V, such as
+the strong typing, convenient syntax, and good developer experience to
+help make the life of the developer easier. This combination is generally
+resistant to runtime errors (by eliminating them at compile time).
+
+If you're open to experimentation, and want to make an efficient app quickly,
+you can try Vex. Let us know about your experience in our official
+[Discord Server](https://discord.gg/vlang)!
 
 ## Contributing To Vex
 
