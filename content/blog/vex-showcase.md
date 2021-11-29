@@ -14,15 +14,14 @@ image: images/vex-showcase/hero.webp
 
 Vex is an easy-to-use, modular web framework for V. It is inspired by
 projects such as Express, and is a great library to quickly build web
-applications with. It was created a fellow V Developer: [Ned](/people/ned-palacios/)
+applications with. It was created by a fellow V Developer: [Ned](/people/ned-palacios/).
+The purpose of this article is to showcase Vex's utility and showing off
+its features by building a toy API with it.
 
 **Note:** The built-in web framework for V
 [VWeb](https://github.com/vlang/v/tree/master/vlib/vweb)
 is similar to Flask (the routes are defined as attributes). It is currently in
-active development. It is also multi-threaded while Vex is not (yet). You
-can choose whichever web framework you wish. The purpose of this article is to
-showcase Vex's utility and showing off its features by building a toy API with
-it.
+active development. It is also multi-threaded while Vex is not (yet).
 
 ## Getting Started With Vex
 
@@ -36,9 +35,8 @@ be good to go.
 
 ### Creating A New Project
 
-In a derired location, run the following command `v new`. Then follow the
-prompts to initialise a new V project. Alternatively, you can create the
-project folder and then do `v init`.
+In a desired location, run the following command `v new`. Then follow the
+prompts to initialise a new V project.
 
 ### Installing Vex
 
@@ -59,7 +57,7 @@ The source for v.mod can be accessed
 [here](https://github.com/hungrybluedev/vex-random-api/blob/main/v.mod).
 
 Once you've updated the file, run `v install`. It will check the dependencies
-listed in the module file and install them in the `VMODULES` directory.
+listed in the module file and install them.
 
 ### Hello, World!
 
@@ -131,10 +129,25 @@ return a custom response based on the path entered.
 
 Finally, we serve the app on port 8080.
 
+## Adding A Simple Homepage
+
+Currently, if you navigate to [localhost:8080](http://localhost:8080/)
+you will get a 404 error. In order to remedy that, you can add a new
+route for `/` to the app like this:
+
+```v
+	app.route(.get, '/', fn (req &ctx.Req, mut res ctx.Resp) {
+		res.send('This is the homepage. Navigate to /users/ned', 200)
+	})
+```
+
+Now navigate to this page, or refresh the page if you're already on it.
+You should see the expected text appear.
+
 ## Vex Random API
 
 Now that Vex is functional, we can design a more complicated example to
-utilise more features available in Vex such as:
+use some advanced features such as:
 
 1. HTML Templating
 2. Static File Serving
@@ -158,7 +171,23 @@ We will expose two endpoints in the app.
 The complete and updated source code for this project is available
 [here](https://github.com/hungrybluedev/vex-random-api).
 
+Directory structure for the project will looks like this:
+
+```text
+├── generate.v
+├── layout.v
+├── static
+│   ├── index.html
+│   └── style.css
+├── vex_example.v
+└── v.mod
+```
+
 Here is a brief description of all the files.
+
+`index.html` and `style.css` are regular HTML and CSS files in the `static`
+directory which can be found
+[at this location](https://github.com/hungrybluedev/vex-random-api/tree/main/static).
 
 `v.mod` is the same as we already have. It lists `nedpals.vex` as a
 dependency. Link to full
@@ -434,7 +463,8 @@ Additionally, you can create an optimised executable by running `v -prod .`,
 for which you need to have a dedicated C compiler like GCC, Clang, or
 MSVC installed. Make sure to compile the app on the same OS and architecture
 as the deployment target. Then you can take the executable and just run it.
-No other dependencies required.
+Copy the `static` folder and place it in the same directory as the generated
+executable. No other dependencies required.
 
 ## Closing Thoughts
 
@@ -454,4 +484,4 @@ If you want to help improve Vex, the best place to start would be building
 more stuff in Vex. The more people use it, the more bugs will surface and
 they will be fixed sooner. You can also help discuss and implement new
 features such as support for multi-threading, expanding middleware support,
-etc.
+more robust templating, etc.
