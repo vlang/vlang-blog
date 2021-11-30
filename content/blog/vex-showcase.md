@@ -14,14 +14,14 @@ image: images/vex-showcase/hero.webp
 
 Vex is an easy-to-use, modular web framework for V. It is inspired by
 projects such as Express, and is a great library to quickly build web
-applications with. It was created by a fellow V Developer: [Ned](/people/ned-palacios/).
-The purpose of this article is to showcase Vex's utility and showing off
-its features by building a toy API with it.
+applications with. It was created by a fellow V Developer: [Ned Palacios](/people/ned-palacios/).
+This article showcases Vex's utility and shows off its features by building
+a toy API with it.
 
 **Note:** The built-in web framework for V
-[VWeb](https://github.com/vlang/v/tree/master/vlib/vweb)
+[`vweb`](https://github.com/vlang/v/tree/master/vlib/vweb)
 is similar to Flask (the routes are defined as attributes). It is currently in
-active development. It is also multi-threaded while Vex is not (yet).
+active development. It is also multi-threaded, while Vex is not (yet).
 
 ## Getting Started With Vex
 
@@ -35,13 +35,15 @@ be good to go.
 
 ### Creating A New Project
 
-In a desired location, run the following command `v new`. Then follow the
-prompts to initialise a new V project.
+In a directory you own, run the command `v new`. Then follow the prompts
+to initialize a new V project in a sub-directory with the same name as
+the project name you choose.
 
 ### Installing Vex
 
-Then navigate to the **`v.mod`** file and add `'nedpals.vex'` to the dependency
-list. Your file should look something like this:
+Change your directory to the new project directory, then edit the **`v.mod`**
+file and add `'nedpals.vex'` to the dependency list. Your file should look
+something like this:
 
 ```text {linenos=table}
 Module{
@@ -68,9 +70,9 @@ The detailed instructions can be accessed from
 [the Wiki](https://github.com/nedpals/vex/wiki/Introduction). The
 condensed version is presented here.
 
-Open the project folder in your favourite text editor. We recommend
-[VSCode](https://code.visualstudio.com/) because we have published
-an official plugin for it
+Open the project folder in your favourite text editor. For now,
+[VSCode](https://code.visualstudio.com/) has the best support for V because
+we have published an official plugin for it
 [here](https://marketplace.visualstudio.com/items?itemName=vlanguage.vscode-vlang).
 
 Modify the main `.v` file in the project and write the following code:
@@ -115,10 +117,10 @@ the web server.
 ## Explanation
 
 Line 1 states that we are in the `main` module. This module's scope is
-all of the files in the root directory, and this module should have a
-main function (by convention).
+all of the files in the root directory, and this module should have a function
+named `main` in one of the files (by convention).
 
-Lines 3-5 import the various submodules in vex that we will make use of.
+Lines 3-5 import the various submodules in vex that we will use.
 
 The `main` function starts from line 7. In it, we define a mutable instance
 of the `app`, on which we define one or more routes. Here, we add a route
@@ -152,7 +154,7 @@ use some advanced features such as:
 1. HTML Templating
 2. Static File Serving
 
-In this example, we make a web app that returns a pseudorandom number
+In this example, we make a web app that returns a pseudo-random number
 based on a set of parameters.
 
 ### API Design
@@ -171,7 +173,7 @@ We will expose two endpoints in the app.
 The complete and updated source code for this project is available
 [here](https://github.com/hungrybluedev/vex-random-api).
 
-Directory structure for the project will looks like this:
+Directory structure for the project should look like this:
 
 ```text
 ├── generate.v
@@ -330,10 +332,10 @@ fn layout(result APIResult, content []html.Tag) html.Tag {
 The complete version of the code is available
 [here](https://github.com/hungrybluedev/vex-random-api/blob/main/layout.v).
 
-Finally, we have `generate.v` which is responsible for generating the
-pseudorandom numbers based on the given options. We leverage the
-in-built `rand` module (and its submodules) for this. This file makes use
-of the **configuration struct** approach - V's recommended way for managing
+Finally, we have `generate.v` which generates the pseudo-random numbers
+based on the given options. We leverage the built-in `rand` module
+(and its submodules) for this. This file makes use of the
+**configuration struct** approach - V's recommended way for managing
 named parameter arguments. The struct `GeneratorConfigStruct` is
 initialised with the arguments necessary. The ones left uninitialised are
 assigned the default zero values. This is in-line with V's philosophy of
@@ -462,13 +464,24 @@ server. You can create an executable simply by running `v .` as a command.
 Additionally, you can create an optimised executable by running `v -prod .`,
 for which you need to have a dedicated C compiler like GCC, Clang, or
 MSVC installed. Make sure to compile the app on the same OS and architecture
-as the deployment target. Then you can take the executable and just run it.
-Copy the `static` folder and place it in the same directory as the generated
-executable. No other dependencies required.
+as the deployment target. Then you can run the executable without waiting
+for it to compile again (which takes significantly longer when `-prod`
+is used). Copy the `static` folder and place it in the same directory as the
+generated executable. No other dependencies required.
+
+## Advanced
+
+V also supports embedding files in the final executable, so you could remove
+the necessity for copying the `static` directory by embedding those files
+directly, leaving you with a single file. This is not recommended for
+prototyping because any changes you make to the stylesheet or homepage
+will be reflected after you restart the web server. However, once you're
+done, this will simplify deployment. This exercise is left to the reader
+(or possibly a future article).
 
 ## Closing Thoughts
 
-Vex is a very simple framework and it takes very little effort to start
+Vex is a very simple framework, and it takes very little effort to start
 being productive with it. It leverages several features of V, such as
 the strong typing, convenient syntax, and good developer experience to
 help make the life of the developer easier. This combination is generally
@@ -484,4 +497,4 @@ If you want to help improve Vex, the best place to start would be building
 more stuff in Vex. The more people use it, the more bugs will surface and
 they will be fixed sooner. You can also help discuss and implement new
 features such as support for multi-threading, expanding middleware support,
-more robust templating, etc.
+more robust templating, and so on.
