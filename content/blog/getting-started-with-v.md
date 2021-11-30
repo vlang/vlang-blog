@@ -117,16 +117,6 @@ fn main() {
 
 Source code: [toml.v](https://github.com/vlang/v/blob/master/examples/toml.v)
 
-### Running a V Program
-
-Your project should have at least one `main` function. Then you can compile and run
-you code in one of two ways:
-
-1. Directly run the program with `v run file.v` or `v run directory`.
-   You can even do `v run .` to run the only main function in the directory.
-2. Compile the program with `v file.v` (optionally as `v -prod file.v`) and then run
-   the generated executable.
-
 ## Setting up your Development Environment
 
 ### Code Editor
@@ -145,7 +135,18 @@ compatible language server. The VSCode extension should be able to automatically
 download and instal VLS. In case of errors,
 check out the [pre-built binaries](https://github.com/vlang/vls/releases), or
 [build VLS from source](https://github.com/vlang/vls#build-from-source). If your find any bugs,
-get them confirmed in the **#vls** channel on our server and then report them on [Github](https://github.com/vlang/vls/issues). We are also open to contributions!
+get them confirmed in the **#vls** channel on our server and then report them on
+[Github](https://github.com/vlang/vls/issues). We are also open to contributions!
+
+### Running a V Program
+
+Your project should have at least one `main` function. Then you can compile and run
+you code in one of two ways:
+
+1. Directly run the program with `v run file.v` or `v run directory`.
+   You can even do `v run .` to run the only main function in the directory.
+2. Compile the program with `v file.v` (optionally as `v -prod file.v`) and then run
+   the generated executable.
 
 ### Miscellaneous
 
