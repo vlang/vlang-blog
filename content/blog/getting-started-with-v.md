@@ -121,7 +121,7 @@ Your project should have at least one `main` function. Then you can compile and 
 you code in one of two ways:
 
 1. Directly run the program with `v run file.v` or `v run directory`.
-   You can even to `v run .` to run the only main function in the directory.
+   You can even do `v run .` to run the only main function in the directory.
 2. Compile the program with `v file.v` (optionally as `v -prod file.v`) and then run
    the generated executable.
 
