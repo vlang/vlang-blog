@@ -88,6 +88,7 @@ available here: [TOML Example](https://github.com/toml-lang/toml/blob/3b11f6921d
 
 ```v {linenos=table}
 import toml
+import toml.to
 
 // Multiline string
 const toml_text = '# This is a TOML document.
@@ -108,9 +109,10 @@ fn main() {
 	ip := doc.value('servers.alpha.ip').string()
 	println('Server IP: "$ip"')
 
-	toml_json := doc.to_json()
+	toml_json := to.json(doc)
 	println(toml_json)
 }
+
 ```
 
 Source code: [toml.v](https://github.com/vlang/v/blob/master/examples/toml.v)
