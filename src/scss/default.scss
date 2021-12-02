@@ -461,6 +461,20 @@ body {
       pointer-events: none;
     }
   }
+
+  code {
+    font-family: "PT Mono", monospace;
+  }
+
+  p > code,
+  li > code {
+    display: inline-block;
+    background-color: var(--secondary-bg);
+    color: var(--secondary-fg);
+    font-size: 85%;
+    padding: 0 10px;
+    border-radius: var(--global-border-radius);
+  }
 }
 @media screen and (max-width: 960px) {
   #desktop-navlinks {
