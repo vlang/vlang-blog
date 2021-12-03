@@ -38,7 +38,7 @@ There are several reasons why we would want to update the Hugo templates:
 
 The relevant folder to search is the `layouts` folder.
 
-If the change is substantial, please make fork the repository, make your
+If the change is substantial, please fork the repository, make your
 changes there, and then open a pull request.
 
 ## Updating The Default Markdown Templates
