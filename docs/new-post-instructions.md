@@ -42,22 +42,19 @@ in with necessary information. The template for this is
 
 ## Adding Images
 
-### Hero Images
+1. Download the images in a directory outside the report and optimize them.
+   One easy to use tool is [squoosh.app](https://squoosh.app/).
+2. The recommended extension is WebP and the size should ideally be under 500 K.
+   Best if under 100 K. If you need to preserve detail, don't resize too much.
+   Keep it at 4K, 1440p, or 1080p.
+3. The recommended place to store the optimized image is in the images folder
+   static directory, under the directory with the same name as the post.
+4. Check the existing structure to see how the images are stored.
+5. It is recommended to use the `{{< rawhtml >}}...{{< /rawhtml >}}` shortcode
+   to directly embed a `<figure>` tag with `<img src="..." alt="..." />` and
+   `<figcaption>`.
+   See [here](https://github.com/vlang/vlang-blog/blob/3875369629ea4ab1e1fe80689d462531195a9037/content/blog/vex-showcase.md?plain=1#L102-L111)
+   for an example.
+6. Making proper use of `alt` and `<figcaption>` is **mandatory**.
 
-1. Download the hero images elsewhere and optimize them. One easy to use tool is
-[squoosh.app](https://squoosh.app/).
-2. The recommended extension is WebP and the size should ideally under 500 K.
-Best if under 100 K. If you need to preserve detail, don't resize too much.
-Keep it at 4K or 1080p.
-3. For the hero images, use images in a wide aspect-ratio.
-4. The recommended place to store the optimized image is in the images folder
-static directory, under the directory with the same name as the post.
-
-Check the existing structure to see how the images are stored.
-
-### Regular Images
-
-It is recommended to use the `{{< rawhtml >}}...{{< /rawhtml >}}` shortcode
-to directly embed a `<figure>` tag with `<img src="..." alt="..." />` and
-`<figcaption>`.
-
+For hero images, follow the guidelines outlined [here](hero-image).
