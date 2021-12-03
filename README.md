@@ -13,13 +13,17 @@ There are three convenience shell scripts present at the root of the
 repository, which help streamline the process of writing new blog posts,
 as well as modifying the stylesheets and scripts.
 
+**Note:** When there is a alternative to Hugo available, which is written in
+V, we will move to that.
+
 ## Instructions
 
 ### Prerequisites
 
 1. NPM and Node - any recent version will do.
 2. Hugo.
-3. Sass and TypeScript installed using `npm`.
+3. Sass and TypeScript installed using `npm`. You can clone the repository
+   and do `npm i`.
 
 ### Local Testing
 
@@ -36,8 +40,12 @@ Please follow the guidelines provided
 ### Deployment
 
 1. From the root of the repository, run the `build.sh` script.
-(Some environments prefer `sh build.sh` instead of `./build.sh`)
+   (Some environments prefer `sh build.sh` instead of `./build.sh`)
 2. The output is stored in the `public` directory, which should be served
-as the static website.
+   as the static website.
 3. For CloudFlare pages, make sure to set the Hugo, Node, and NPM versions
-as environment variables.
+   as environment variables.
+
+## Contribution Guidelines
+
+Refer to the [Contribution Guidelines](CONTRIBUTING).
