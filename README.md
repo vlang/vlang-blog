@@ -48,4 +48,4 @@ Please follow the guidelines provided
 
 ## Contribution Guidelines
 
-Refer to the [Contribution Guidelines](CONTRIBUTING).
+Refer to the [Contribution Guidelines](CONTRIBUTING.md).

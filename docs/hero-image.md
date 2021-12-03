@@ -14,7 +14,7 @@ These are the requirements that must be followed at all costs.
 
 These should be followed to ensure that the website's look stays consistent.
 
-- The graphic elements used must follow the [style guide](style-guide).
+- The graphic elements used must follow the [style guide](style-guide.md).
   These include components like text, which must use stipulated fonts.
 - It is recommended to have the hero image be in landscape mode.
 - Additionally, the preferred resolution is **1600x900**.
@@ -28,7 +28,7 @@ Suggestions to make the process of creating Hero Images simpler for all
 contributors.
 
 - Same instructions for
-  [optimisation](https://github.com/vlang/vlang-blog/blob/main/docs/new-post-instructions.md#adding-images)
+  [optimisation](/docs/new-post-instructions.md#adding-images)
   as regular images.
 - Royalty free images can be obtained from [Unsplash](https://unsplash.com).
   Ideally, include some modifications to the image, do not use them verbatim.

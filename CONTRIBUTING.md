@@ -24,7 +24,7 @@
 
 ## Creating A New Post
 
-Follow the instructions [here](docs/new-post-instructions).
+Follow the instructions [here](docs/new-post-instructions.md).
 
 ## Updating The Hugo Templates
 
