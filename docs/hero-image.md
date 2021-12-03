@@ -1,5 +1,9 @@
 # Guidelines For Hero Image
 
+The hero image or thumbnail is the first image that readers see when they
+read the blog. This may be through a link preview card, or through opening
+the blog page itself.
+
 ## Strict Guidelines
 
 These are the requirements that must be followed at all costs.
@@ -17,10 +21,11 @@ These should be followed to ensure that the website's look stays consistent.
 - The graphic elements used must follow the [style guide](style-guide.md).
   These include components like text, which must use stipulated fonts.
 - It is recommended to have the hero image be in landscape mode.
-- Additionally, the preferred resolution is **1600x900**.
-- It is not necessary to stick to the enforce the colour palette restrictions
-  on all images. However, it is expected that at least the elements will
-  conform to the standard.
+- The preferred resolution is **1600x900**.
+- There is no compulsion to choose images based on the official palette
+  colours. It is sufficient to use them for graphic elements like text,
+  icons, just enough to maintain the consistency of the design language
+  and play nice with the underlying image.
 
 ## Design Hints
 
