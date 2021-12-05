@@ -32,7 +32,10 @@
 
   {{ if .Params.image }}
   <meta property="og:image" content="{{ .Site.BaseURL }}/{{ .Params.image }}" />
-  <meta property="twitter:image" content="{{ .Site.BaseURL }}/{{ .Params.image }}" />
+  <meta
+    property="twitter:image"
+    content="{{ .Site.BaseURL }}/{{ .Params.image }}"
+  />
   {{ end }}
 
   <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
@@ -59,7 +62,7 @@
   <meta name="theme-color" content="#ffffff" />
 
   <link
-    href="https://fonts.googleapis.com/css2?family=PT+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Jost:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Jost:ital,wght@0,400;0,600;1,400;1,600&display=swap"
     rel="stylesheet"
   />
   <link rel="stylesheet" href="/css/default.css" />
