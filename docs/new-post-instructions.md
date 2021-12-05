@@ -57,4 +57,4 @@ in with necessary information. The template for this is
    for an example.
 6. Making proper use of `alt` and `<figcaption>` is **mandatory**.
 
-For hero images, follow the guidelines outlined [here](hero-image.md).
+For thumbnail images, follow the guidelines outlined [here](thumbnail-image.md).

@@ -1,4 +1,4 @@
-# Guidelines For Hero Image
+# Guidelines For Thumbnail Image
 
 The hero image or thumbnail is the first image that readers see when they
 read the blog. This may be through a link preview card, or through opening
@@ -20,7 +20,7 @@ These should be followed to ensure that the website's look stays consistent.
 
 - The graphic elements used must follow the [style guide](style-guide.md).
   These include components like text, which must use stipulated fonts.
-- It is recommended to have the hero image be in landscape mode.
+- It is recommended to have the thumbnail image be in landscape mode.
 - The preferred resolution is **1600x900**.
 - There is no compulsion to choose images based on the official palette
   colours. It is sufficient to use them for graphic elements like text,
@@ -29,7 +29,7 @@ These should be followed to ensure that the website's look stays consistent.
 
 ## Design Hints
 
-Suggestions to make the process of creating Hero Images simpler for all
+Suggestions to make the process of creating Thumbnail Images simpler for all
 contributors.
 
 - Same instructions for

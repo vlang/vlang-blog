@@ -15,7 +15,7 @@ assigned to web projects. The changes must be reflected in the relevant
 
 1. Headings and displays: [Jost](https://fonts.google.com/specimen/Jost)
 2. General body text: [PT Serif](https://fonts.google.com/specimen/PT+Serif)
-3. Source code listing: [PT Mono](https://fonts.google.com/specimen/PT+Mono)
+3. Source code listing: [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono)
 
 ## Colour Palette
 
