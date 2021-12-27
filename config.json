@@ -15,7 +15,10 @@
   "markup": {
     "highlight": {
       "style": "friendly",
-      "tabWidth": 2
+      "tabWidth": 4
+    },
+    "renderer": {
+      "hardWraps": true
     }
   }
 }
