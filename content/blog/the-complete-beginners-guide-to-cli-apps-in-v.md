@@ -109,7 +109,7 @@ Hello World!
 
 We can start structuring our application so that we stay organised. In the
 root directory, create a new folder called `geometry`. Now we can make a
-file `options.v`.
+file `options.v` inside it.
 
 The directory structure now looks like this:
 
@@ -195,18 +195,20 @@ fn main() {
 
 A few things to note here:
 
-1. The `get_shape_input()` function takes input from the user and returns a
+1. The `os` and `flag` modules are available by default in V. `geometry` is
+   the module we defined ourselves.
+2. The `get_shape_input()` function takes input from the user and returns a
    valid `GeometricShape` when no shape is provided in the command-line
    arguments. It loops repeatedly until the user quits with `Ctrl+C` or enters
    a valid shape.
-2. The `flag` module contains the `FlagParser` struct that provides a simple way
+3. The `flag` module contains the `FlagParser` struct that provides a simple way
    to parse command-line arguments. We use it to progressively define the
    way in which the user can interact with the application. The options can be
    extracted as soon as they are defined.
-3. Once all the relevant flags have been defined and all the metadata is
+4. Once all the relevant flags have been defined and all the metadata is
    entered, the `fp.usage()` lists all the data entered so far. We use this in
    lines 42 and 53, _after_ all the options have been defined and implemented.
-4. The documentation for the `flag` module is available
+5. The documentation for the `flag` module is available
    [here](https://modules.vlang.io/flag.html).
 
 We have not yet defined `geometry.ShapeOptions` and `geometry.generate_shape`.
@@ -381,6 +383,21 @@ pub fn generate_diamond(options ShapeOptions) []string {
 		lines << lines[i]
 	}
 	return lines
+}
+```
+
+Now we can call these functions in the `generate_shape` function:
+
+```v
+// ...
+pub fn generate_shape(shape GeometricShape, options ShapeOptions) []string {
+	return match shape {
+		.left_triangle { generate_left_triangle(options) }
+		.right_triangle { generate_right_triangle(options) }
+		.pyramid { generate_pyramid(options) }
+		.square { generate_square(options) }
+		.diamond { generate_diamond(options) }
+	}
 }
 ```
 
