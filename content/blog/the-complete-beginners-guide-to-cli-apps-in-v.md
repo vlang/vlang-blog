@@ -539,3 +539,9 @@ the [V Discord community](https://discord.gg/vlang) if you have any questions
 or suggestions. We are not quite done with `geo` yet, because we will
 explore how to write unit tests in V and implement continuous integration
 with GitHub Actions. Stay tuned!
+
+## Acknowledgement
+
+The idea for this demo project was provided by
+[SheatNoisette](https://github.com/SheatNoisette) who also helped add the
+unit tests.
