@@ -836,6 +836,6 @@ The idea for this demo project was provided by
 [SheatNoisette](https://github.com/SheatNoisette) who also helped add the
 unit tests.
 
-I would also like to thank **spytheman** and **JalonSalov**, both of whom
+I would also like to thank **spytheman** and **JalonSolov**, both of whom
 are active on the [V Discord Server](https://discord.gg/vlang), and have
 provided valuable feedback and suggestions.
