@@ -105,51 +105,36 @@ $ v run .
 Hello World!
 ```
 
-## Setting Up Modules
+## Accepting Command-Line Arguments
 
-We can start structuring our application so that we stay organised. In the
-root directory, create a new folder called `geometry`. Now we can make a
-file `options.v` inside it.
+Let us start with how we want to accept command-line arguments. We can make
+use of the in-built [`flag`](https://modules.vlang.io/flag.html) and
+[`os`](https://modules.vlang.io/os.html) modules to do this. In order to use
+these modules in our code, we will need to `import` them.
 
-The directory structure now looks like this:
+We will start simple and put everything the `main` function, which is the
+entry point for the application. By default, all variables defined in V
+are immutable. To make a variable mutable, we need to use the `mut` keyword.
+We will make use of this when we define a new `FlagParser` struct using the
+`flag.new_flag_parser()` function.
 
-```text
-.
-├── geometry
-│   └── options.v
-├── geo.v
-└── v.mod
-```
+The `FlagParser` can then be modified to add details about the application.
+Additionally, we define the various types of flags that we want to accept
+using functions such as `bool(...)`, `int(...)`, `string(...)`, etc. The
+result of processing is returned as soon as we defined the flag which we
+store in various variables.
 
-We will put more files in the `geometry` folder as we progress but this is
-a good starting point.
+Right now, we can just print out the values we've parsed to the screen.
+And when we're done, we need to call `finalize()` to finish the parsing,
+and obtain the rest of the arguments provided, if any.
 
-## Parsing Command-Line Arguments with the `flag` Module
-
-In the main `geo.v` file, we can start with the following code:
+The final code that we will write is as follows:
 
 ```v {linenos=table}
 module main
 
 import os
 import flag
-import geometry
-
-// get_shape_input continuously asks the user for a shape until the user enters a valid shape
-fn get_shape_input() geometry.GeometricShape {
-	for true {
-		input_string := os.input_opt('Enter a shape: ') or { 'none' }
-
-		if input_string == 'none' || input_string !in geometry.allowed_shapes {
-			println('Invalid shape: $input_string')
-			println('Available options are: ${geometry.allowed_shapes.join(', ')}')
-			continue
-		}
-
-		return geometry.shape_map[input_string]
-	}
-	return geometry.GeometricShape.left_triangle
-}
 
 fn main() {
 	mut fp := flag.new_flag_parser(os.args)
@@ -159,65 +144,222 @@ fn main() {
 	fp.description('A sample CLI application that prints geometric shapes to the console.')
 	fp.skip_executable()
 
-	show_help := fp.bool('help', `h`, false, 'Show this help text.')
+	shape := fp.string('shape', `p`, 'none', 'The shape to use for the geometry.').to_lower()
 
-	mut shape := fp.string('shape', `p`, 'none', 'The shape to use for the geometry.' +
-		'\n                            Allowed shapes are: ${geometry.allowed_shapes.join(', ')}')
-
-	shape_options := geometry.ShapeOptions{
-		size: fp.int('size', `z`, 5, 'The size parameter for the shapes.')
-		symbol: fp.string('symbol', `m`, '*', 'The symbol to use for the geometry.').runes()[0]
+	size := fp.int('size', `z`, 5, 'The size parameter for the shapes.')
+	symbol := fp.string('symbol', `m`, '*', 'The symbol to use for the geometry.').runes()[0] or {
+		`*`
 	}
 
-	if show_help {
-		println(fp.usage())
-		exit(0)
+	additional_args := fp.finalize() ?
+
+	if additional_args.len > 0 {
+		println('Unprocessed arguments:\n$additional_args.join_lines()')
 	}
 
-	if !shape_options.are_valid() {
-		println('Size parameter must be positive.')
-		exit(1)
-	}
-
-	if shape !in geometry.allowed_shapes && shape != 'none' {
-		println('Invalid shape: $shape')
-		println(fp.usage())
-		exit(1)
-	}
-
-	shape_enum := if shape == 'none' { get_shape_input() } else { geometry.shape_map[shape] }
-
-	lines := geometry.generate_shape(shape_enum, shape_options)
-	println(lines.join_lines())
+	println(shape)
+	println(size)
+	println(symbol)
 }
-
 ```
 
-A few things to note here:
+We define our flag parse in line 7. We initialize it with details such as the
+name of the application, version, description, etc. Next, we define the various
+flags that we want to use. The general syntax is
+`` fp.<type>('<name>', `<short_name>`, <default_value>, '<description>') ``.
 
-1. The `os` and `flag` modules are available by default in V. `geometry` is
-   the module we defined ourselves.
-2. The `get_shape_input()` function takes input from the user and returns a
-   valid `GeometricShape` when no shape is provided in the command-line
-   arguments. It loops repeatedly until the user quits with `Ctrl+C` or enters
-   a valid shape.
-3. The `flag` module contains the `FlagParser` struct that provides a simple way
-   to parse command-line arguments. We use it to progressively define the
-   way in which the user can interact with the application. The options can be
-   extracted as soon as they are defined.
-4. Once all the relevant flags have been defined and all the metadata is
-   entered, the `fp.usage()` lists all the data entered so far. We use this in
-   lines 42 and 53, _after_ all the options have been defined and implemented.
-5. The documentation for the `flag` module is available
-   [here](https://modules.vlang.io/flag.html).
+Note that we use backticks to represent a single character, which is also known
+as a _rune_. Also, we use the `to_lower()` function to convert the shape input
+to lowercase to simplify the processing down the road. We also make sure that
+we protect against zero-length strings for the specified symbol using an `or {}`
+block. If the user inputs something invalid, it will default to `*`.
 
-We have not yet defined `geometry.ShapeOptions` and `geometry.generate_shape`.
-So let us do that in `geometry/options.v`:
+After we're done processing the flags, we call `finalize()` to obtain the
+remaining arguments. We don't do anything with them, so we list them as
+ignored. In your application, you may use them to get the path of a file,
+or the name of a directory, and so on.
+
+Finally, we print out the values of the flags to the screen.
+
+To run the code, we can use the `v run` command:
+
+```text
+$ v run .
+none
+5
+*
+```
+
+Alternatively, we can build the executable and then run the application:
+
+```text
+$ v .
+$ ./geo
+none
+5
+*
+```
+
+Now we test the different command-line arguments:
+
+```text
+$ v run . --size 12
+none
+12
+*
+$ v run . --size 20 --symbol +
+none
+20
++
+$ v run . -p pyramid --symbol 🔺
+pyramid
+5
+🔺
+```
+
+At this stage, we can also use the `--version` flag. This is supported after
+we call `fp.finalize()`. Here's how to use it:
+
+```text
+$ v run . --version
+geo 0.0.1
+$ ./geo --version
+geo 0.0.1
+```
+
+The same is also true for the `--help` or `-h` flag:
+
+```text
+$ v run . --help
+# or
+$ ./geo -h
+geo 0.0.1
+-----------------------------------------------
+Usage: geo [options] [ARGS]
+
+Description: A sample CLI application that prints geometric shapes to the console.
+
+Options:
+  -p, --shape <string>      The shape to use for the geometry.
+  -z, --size <int>          The size parameter for the shapes.
+  -m, --symbol <string>     The symbol to use for the geometry.
+  -h, --help                display this help and exit
+  --version                 output version information and exit
+```
+
+If you want to customise the output that is generated by the `--help`
+and `--version` flags, you can redefine them and customise the behaviour.
+
+## Working with Modules
+
+We can start structuring our application so that we stay organised.
+
+The recommended way to organise V code is with modules and subdirectories.
+In our case, we want to create a module called `geometry` that contains the
+relevant code not concerned with command-line argument processing. There
+are two things we do to make this module.
+
+1. In the root directory, create a new folder called `geometry`.
+2. All the files inside this subdirectory will be part of the `geometry`
+   module as long as they contain a line `module geometry`.
+
+> If there is a file that does not include the `module geometry` line, then
+> it will not be considered a part of the module and it won't have access to
+> the non-public contents of the module. This is useful when you want to
+> write unit test and want to simulate external access to your module and
+> ensure the public facing API is functioning correctly. Alternately, you
+> can include the `module geometry` line in the test file and it can help you
+> check the non-public parts of the module.
+
+Now we can make a file `options.v` inside the geometry module folder. The
+directory structure now looks like this:
+
+```text
+.
+├── geometry
+│   └── options.v
+├── geo.v
+└── v.mod
+```
+
+In this `options.v` file, we will start defining some structs, enums, and
+functions that we will call from the `main` function in `geo.v`. We start
+by defining an `enum` of the various types of shapes that we plan to
+support:
+
+```v
+pub enum GeometricShapeKind {
+	left_triangle
+	right_triangle
+	pyramid
+	square
+	diamond
+}
+```
+
+Next, we define the configuration struct that we will put our user inputs
+inside when sending data to the appropriate functions:
+
+```v
+pub struct ShapeOptions {
+	kind   GeometricShapeKind
+	size   int
+	symbol rune = `*`
+}
+
+pub fn (options ShapeOptions) are_valid() bool {
+	return options.size > 0 && options.symbol != 0
+}
+```
+
+The `ShapeOptions` stores the shape type, size, and symbol. We also define
+a function `are_valid()` on the ShapeOptions type that checks if the
+configuration provided is valid. Note that we apply a default value
+of `*` to the symbol. So if it is left uninitialised, it will default
+to `*`. V initialises every field in a struct with a zero-based value if
+no further information is provided. In case of enums, the default value
+is the first value specified in the enum because it has the internal index
+of **0**.
+
+Next, we define a map that makes it easy to convert strings to the
+`GeometricShapeKind` enum. We also store the string keys to be used
+later when we want to see if the user shape inputs are valid.
+
+```v
+pub const (
+	shape_map = {
+		'left-triangle':  GeometricShapeKind.left_triangle
+		'right-triangle': GeometricShapeKind.right_triangle
+		'pyramid':        GeometricShapeKind.pyramid
+		'square':         GeometricShapeKind.square
+		'diamond':        GeometricShapeKind.diamond
+	}
+	allowed_shapes = shape_map.keys()
+)
+```
+
+Let's put in a temporary implementation of the `generate_shape()` function
+which accepts a `ShapeOptions` variable:
+
+```v
+pub fn generate_shape(options ShapeOptions) []string {
+	return match options.kind {
+		.left_triangle { ['left_triangle'] }
+		.right_triangle { ['right_triangle'] }
+		.pyramid { ['pyramid'] }
+		.square { ['square'] }
+		.diamond { ['diamond'] }
+	}
+}
+```
+
+Putting everything together, here is the complete source for `options.v`
+so far:
 
 ```v {linenos=table}
 module geometry
 
-pub enum GeometricShape {
+pub enum GeometricShapeKind {
 	left_triangle
 	right_triangle
 	pyramid
@@ -226,6 +368,7 @@ pub enum GeometricShape {
 }
 
 pub struct ShapeOptions {
+	kind   GeometricShapeKind
 	size   int
 	symbol rune = `*`
 }
@@ -236,52 +379,153 @@ pub fn (options ShapeOptions) are_valid() bool {
 
 pub const (
 	shape_map = {
-		'left-triangle':  GeometricShape.left_triangle
-		'right-triangle': GeometricShape.right_triangle
-		'pyramid':        GeometricShape.pyramid
-		'square':         GeometricShape.square
-		'diamond':        GeometricShape.diamond
+		'left-triangle':  GeometricShapeKind.left_triangle
+		'right-triangle': GeometricShapeKind.right_triangle
+		'pyramid':        GeometricShapeKind.pyramid
+		'square':         GeometricShapeKind.square
+		'diamond':        GeometricShapeKind.diamond
 	}
 	allowed_shapes = shape_map.keys()
 )
 
-pub fn generate_shape(shape GeometricShape, options ShapeOptions) []string {
-	return match shape {
-		.left_triangle { [] }
-		.right_triangle { [] }
-		.pyramid { [] }
-		.square { [] }
-		.diamond { [] }
+pub fn generate_shape(options ShapeOptions) []string {
+	return match options.kind {
+		.left_triangle { ['left_triangle'] }
+		.right_triangle { ['right_triangle'] }
+		.pyramid { ['pyramid'] }
+		.square { ['square'] }
+		.diamond { ['diamond'] }
 	}
 }
 ```
 
-The code is self-explanatory but here are some clarifications for the most
-important parts of the code:
+Going back to `main` in `geo.v`, we make a few changes to properly
+validate the user input for the shape. We use the `allowed_shapes`
+list of strings to restrict the user input to the ones we will
+implement. We also check that the size is greater than zero and that
+the shape is either not specified, or that it is one of the allowed ones.
 
-1. The `GeometricShape` enum contains the different shapes that we can use.
-2. The `ShapeOptions` struct contains the options that we can use to generate
-   the shapes: the size and the symbol.
-3. `generate_shape` generates the shapes according to the parameters
-   passed to it. Right now, it just returns an empty list for all the shapes.
-   We will implement the logic in the next section.
-4. We use the `shape_map` constant to map the string representation of the
-   shape to the `GeometricShape` enum.
-5. Also, these string representations are allowed user inputs. They are
-   defined with `-` instead of `_` in their names. For convenience, we
-   store them in `allowed_shapes`.
-6. There is also an `are_valid()` function that checks if the options are
-   valid. It is just simple check of only two logical checks but can be
-   updated later to be more robust.
+We use `'none'` as a dummy shape. If the user does not specify a shape,
+we continuously ask for input from the user until they enter a valid
+one or they quit by pressing `Ctrl-C`.
 
-## The Shape Generation Logic
+Finally, we can now call the `generate_shape()` function and pass in
+the details for the `ShapeOptions` configuration struct. Notice that
+this syntax is reminiscent of Python's named arguments.
 
-The actual functions for generating the shapes are stored in separate files.
+The updated source code for `geo.v` is therefore:
 
-V supports Unicode characters through the `rune` datatype. So whenever we
-are dealing with individual characters, we use runes instead of bytes.
+```v {linenos=table}
+module main
 
-For the triangle functions, we store them in the `geometry/triangle.v` file:
+import os
+import flag
+import geometry
+
+fn main() {
+	mut fp := flag.new_flag_parser(os.args)
+
+	fp.application('geo')
+	fp.version('0.0.1')
+	fp.description('A sample CLI application that prints geometric shapes to the console.')
+	fp.skip_executable()
+
+	shape := fp.string('shape', `p`, 'none', 'The shape to use for the geometry.' +
+		'\n                            Allowed shapes are: ${geometry.allowed_shapes.join(', ')}').to_lower()
+
+	size := fp.int('size', `z`, 5, 'The size parameter for the shapes.')
+	symbol := fp.string('symbol', `m`, '*', 'The symbol to use for the geometry.').runes()[0] or {
+		`*`
+	}
+
+	additional_args := fp.finalize() ?
+
+	if additional_args.len > 0 {
+		println('Unprocessed arguments:\n$additional_args.join_lines()')
+	}
+
+	if size <= 0 {
+		println('Size parameter must be positive.')
+		exit(1)
+	}
+
+	if shape !in geometry.allowed_shapes && shape != 'none' {
+		println('Invalid shape: $shape')
+		println(fp.usage())
+		exit(1)
+	}
+
+	shape_kind := if shape == 'none' { get_shape_input() } else { geometry.shape_map[shape] }
+
+	lines := geometry.generate_shape(kind: shape_kind, size: size, symbol: symbol)
+	println(lines.join_lines())
+}
+
+// get_shape_input continuously asks the user for a shape until the user enters a valid shape
+fn get_shape_input() geometry.GeometricShapeKind {
+	for true {
+		input_string := (os.input_opt('Enter a shape: ') or { 'none' }).to_lower()
+
+		if input_string == 'none' || input_string !in geometry.allowed_shapes {
+			println('Invalid shape: $input_string')
+			println('Available options are: ${geometry.allowed_shapes.join(', ')}')
+			continue
+		}
+
+		return geometry.shape_map[input_string]
+	}
+	return .left_triangle
+}
+```
+
+We can run the project and make sure everything is working as it should:
+
+```text
+$ v run . --shape left-triangle --size 23 --symbol +
+left_triangle
+$ v run . --shape square --symbol .
+square
+$ v run .
+Enter a shape: diamon
+Invalid shape: diamon
+Available options are: left-triangle, right-triangle, pyramid, square, diamond
+Enter a shape: diamond
+diamond
+```
+
+## Generating the Shapes
+
+Now that we have the pipeline in place, we are ready to return proper
+shapes as per the user input! We will be return the shapes as a list of
+strings, where each string is a line of the shape.
+
+We add two new files to the `geometry` module:
+
+1. `triangle.v` - for containing source code relevant to generation of
+   triangular shapes.
+2. `quadrilateral.v` - the same but for quadrilateral shapes.
+
+The project structure will now be:
+
+```text
+├── geometry
+│   ├── options.v
+│   ├── quadrilateral.v
+│   └── triangle.v
+├── geo.v
+└── v.mod
+```
+
+> It is important to note that we use arrays of `runes` to store
+> the symbols. If we use bytes, we will only be able to support
+> ASCII symbols. With the help of runes, we can support Unicode
+> characters, such as emojis.
+
+The logic to generate the shapes is rather straightforward. We will
+check if the options are valid, and if they are, we will return the
+appropriate shape as an array of strings.
+
+Here is the source code for the `triangle.v` file:
 
 ```v {linenos=table}
 module geometry
@@ -344,7 +588,7 @@ pub fn generate_pyramid(options ShapeOptions) []string {
 }
 ```
 
-The square and diamond go in `geometry/quadrilateral.v`:
+And here is the source code for the `quadrilateral.v` file:
 
 ```v {linenos=table}
 module geometry
@@ -386,12 +630,21 @@ pub fn generate_diamond(options ShapeOptions) []string {
 }
 ```
 
-Now we can call these functions in the `generate_shape` function:
+All we are doing here is simple manipulations of arrays using nesting
+and loops with interesting indices. Sometimes, we reuse the previous
+lines and copy them over to simplify the shape generation, like we do
+in the `generate_diamond` function.
+
+In every function, we make use of `options.are_valid()` to check if
+the options are valid. If they are, we return the shape. If they are
+not, we return an empty array.
+
+Finally, we can modify the `generate_shape` function to use the appropriate
+functions and return the shapes as requested.
 
 ```v
-// ...
-pub fn generate_shape(shape GeometricShape, options ShapeOptions) []string {
-	return match shape {
+pub fn generate_shape(options ShapeOptions) []string {
+	return match options.kind {
 		.left_triangle { generate_left_triangle(options) }
 		.right_triangle { generate_right_triangle(options) }
 		.pyramid { generate_pyramid(options) }
@@ -401,17 +654,27 @@ pub fn generate_shape(shape GeometricShape, options ShapeOptions) []string {
 }
 ```
 
-So now, the structure of the project should look like the following:
+Now when we run the project, we see the following outputs:
 
 ```text
-.
-├── geometry
-│   ├── options.v
-│   ├── quadrilateral.v
-│   └── triangle.v
-├── geo.v
-└── v.mod
-
+$ v run .
+Enter a shape: square
+*****
+*****
+*****
+*****
+*****
+$ v run . --size 10 --shape right-triangle --symbol "/"
+         /
+        //
+       ///
+      ////
+     /////
+    //////
+   ///////
+  ////////
+ /////////
+//////////
 ```
 
 ## Final Touches
@@ -522,14 +785,20 @@ geo x.y.z
 -----------------------------------------------
 Usage: geo [options] [ARGS]
 
-Description: A sample CLI app for printing geometric shapes to the terminal.
+Description: A sample CLI application that prints geometric shapes to the console.
 
 Options:
-  -h, --help                Show this help text.
   -p, --shape <string>      The shape to use for the geometry.
                             Allowed shapes are: left-triangle, right-triangle, pyramid, square, diamond
   -z, --size <int>          The size parameter for the shapes.
   -m, --symbol <string>     The symbol to use for the geometry.
+  -h, --help                display this help and exit
+  --version                 output version information and exit
+```
+
+> `./geo --version`
+```text
+geo x.y.z
 ```
 
 ## Concluding Thoughts
@@ -562,3 +831,7 @@ with GitHub Actions. Stay tuned!
 The idea for this demo project was provided by
 [SheatNoisette](https://github.com/SheatNoisette) who also helped add the
 unit tests.
+
+I would also like to thank **spytheman** and **JalonSalov**, both of whom
+are active on the [V Discord Server](https://discord.gg/vlang), and have
+provided valuable feedback and suggestions.
