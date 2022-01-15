@@ -467,10 +467,10 @@ body {
   }
 
   p > code,
-  li > code {
+  li > code,
+  a > code {
     display: inline-block;
     background-color: var(--secondary-bg);
-    color: var(--secondary-fg);
     font-size: 85%;
     padding: 0 10px;
     border-radius: var(--global-border-radius);
