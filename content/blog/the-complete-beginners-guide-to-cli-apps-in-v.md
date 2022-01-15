@@ -37,7 +37,7 @@ Interested? Let's get started...
 
 ## Prerequisites
 
-You should have V installed in your system. Ideally, you should also know
+You should have V installed on your system. Ideally, you should also know
 the basic syntax of V. If you need help with these, refer to
 [this guide](/getting-started-with-v/).
 
@@ -72,8 +72,8 @@ Initialising ...
 Complete!
 ```
 
-Let us take a look at the files that were create by `v new`. In the folder, we
-find a `v.mod` file and a `geo.v` file.
+Let us take a look at the files that were created by `v new`. In the folder,
+we find a `v.mod` file and a `geo.v` file.
 
 The `v.mod` file looks like this:
 
@@ -108,27 +108,31 @@ Hello World!
 ## Accepting Command-Line Arguments
 
 Let us start with how we want to accept command-line arguments. We can make
-use of the in-built [`flag`](https://modules.vlang.io/flag.html) and
+use of the built-in [`flag`](https://modules.vlang.io/flag.html) and
 [`os`](https://modules.vlang.io/os.html) modules to do this. In order to use
 these modules in our code, we will need to `import` them.
 
-We will start simple and put everything the `main` function, which is the
+We will start simple and put everything in the `main` function which is the
 entry point for the application. By default, all variables defined in V
-are immutable. To make a variable mutable, we need to use the `mut` keyword.
+are immutable. To make a variable mutable we need to use the `mut` keyword.
 We will make use of this when we define a new `FlagParser` struct using the
 `flag.new_flag_parser()` function.
 
 The `FlagParser` can then be modified to add details about the application.
 Additionally, we define the various types of flags that we want to accept
-using functions such as `bool(...)`, `int(...)`, `string(...)`, etc. The
-result of processing is returned as soon as we defined the flag which we
-store in various variables.
+using functions such as `bool(...)`, `int(...)`, `string(...)`, etc. When
+the function is called, it will match pieces of the command line arguments
+to the flags we defined and we store the values in variables that will
+be used later.
 
 Right now, we can just print out the values we've parsed to the screen.
 And when we're done, we need to call `finalize()` to finish the parsing,
-and obtain the rest of the arguments provided, if any.
+and obtain the rest of the arguments provided by the user.
 
-The final code that we will write is as follows:
+Note that the flag module automatically adds `-h/--help` and `--version`
+when `finalize()` is called.
+
+The code should now look like this:
 
 ```v {linenos=table}
 module main
@@ -163,7 +167,7 @@ fn main() {
 }
 ```
 
-We define our flag parse in line 7. We initialize it with details such as the
+We define our parser in line 7. We initialize it with details such as the
 name of the application, version, description, etc. Next, we define the various
 flags that we want to use. The general syntax is
 `` fp.<type>('<name>', `<short_name>`, <default_value>, '<description>') ``.
@@ -217,7 +221,7 @@ pyramid
 🔺
 ```
 
-At this stage, we can also use the `--version` flag. This is supported after
+The `flag` module automatically adds a `--version` flag when
 we call `fp.finalize()`. Here's how to use it:
 
 ```text
@@ -254,19 +258,19 @@ and `--version` flags, you can redefine them and customise the behaviour.
 
 We can start structuring our application so that we stay organised.
 
-The recommended way to organise V code is with modules and subdirectories.
+The recommended way to organise V code is with modules/subdirectories.
 In our case, we want to create a module called `geometry` that contains the
 relevant code not concerned with command-line argument processing. There
 are two things we do to make this module.
 
 1. In the root directory, create a new folder called `geometry`.
 2. All the files inside this subdirectory will be part of the `geometry`
-   module as long as they contain a line `module geometry`.
+   module as long as they have the line `module geometry` at the top.
 
 > If there is a file that does not include the `module geometry` line, then
 > it will not be considered a part of the module and it won't have access to
 > the non-public contents of the module. This is useful when you want to
-> write unit test and want to simulate external access to your module and
+> write unit tests and want to simulate external access to your module and
 > ensure the public facing API is functioning correctly. Alternately, you
 > can include the `module geometry` line in the test file and it can help you
 > check the non-public parts of the module.
@@ -297,8 +301,8 @@ pub enum GeometricShapeKind {
 }
 ```
 
-Next, we define the configuration struct that we will put our user inputs
-inside when sending data to the appropriate functions:
+Next, we define the configuration struct that we will store our user inputs
+in to pass to the appropriate functions:
 
 ```v
 pub struct ShapeOptions {
@@ -312,14 +316,13 @@ pub fn (options ShapeOptions) are_valid() bool {
 }
 ```
 
-The `ShapeOptions` stores the shape type, size, and symbol. We also define
+`ShapeOptions` stores the shape type, size, and symbol. We also define
 a function `are_valid()` on the ShapeOptions type that checks if the
 configuration provided is valid. Note that we apply a default value
 of `*` to the symbol. So if it is left uninitialised, it will default
 to `*`. V initialises every field in a struct with a zero-based value if
 no further information is provided. In case of enums, the default value
-is the first value specified in the enum because it has the internal index
-of **0**.
+is the first value specified in the enum.
 
 Next, we define a map that makes it easy to convert strings to the
 `GeometricShapeKind` enum. We also store the string keys to be used
@@ -410,8 +413,9 @@ we continuously ask for input from the user until they enter a valid
 one or they quit by pressing `Ctrl-C`.
 
 Finally, we can now call the `generate_shape()` function and pass in
-the details for the `ShapeOptions` configuration struct. Notice that
-this syntax is reminiscent of Python's named arguments.
+the details for the `ShapeOptions` configuration struct.
+If you are familiar with Python, this syntax is reminiscent of 
+Python's named arguments.
 
 The updated source code for `geo.v` is therefore:
 
@@ -496,7 +500,7 @@ diamond
 ## Generating the Shapes
 
 Now that we have the pipeline in place, we are ready to return proper
-shapes as per the user input! We will be return the shapes as a list of
+shapes as per the user input! We will return the shapes as a list of
 strings, where each string is a line of the shape.
 
 We add two new files to the `geometry` module:
@@ -522,7 +526,7 @@ The project structure will now be:
 > characters, such as emojis.
 
 The logic to generate the shapes is rather straightforward. We will
-check if the options are valid, and if they are, we will return the
+verify that the options are valid, and if they are, we will return the
 appropriate shape as an array of strings.
 
 Here is the source code for the `triangle.v` file:
@@ -742,7 +746,7 @@ xxxxxx
 xxxxxxx
 ```
 
-> `./geo --shape pyramid`
+> `v run . --shape pyramid`
 
 ```text
     *
@@ -752,7 +756,7 @@ xxxxxxx
 *********
 ```
 
-> `./geo --shape diamond --size 5 --symbol "^"`
+> `v run . --shape diamond --size 5 --symbol "^"`
 
 ```text
     ^
@@ -767,7 +771,7 @@ xxxxxxx
 
 ```
 
-> ` ./geo`
+> ` v run .`
 
 ```text
 Enter a shape: right-triangle
@@ -778,7 +782,7 @@ Enter a shape: right-triangle
 *****
 ```
 
-> `./geo --help`
+> `v run . --help`
 
 ```text
 geo x.y.z
@@ -796,7 +800,7 @@ Options:
   --version                 output version information and exit
 ```
 
-> `./geo --version`
+> `v run . --version`
 ```text
 geo x.y.z
 ```
@@ -810,14 +814,14 @@ It's very easy to make CLI applications really quickly in V. Especially
 considering the fact that you do not need to validate the command-line
 flags yourself. The user only needs to focus on building the business
 logic for the application. In this tutorial, we built a sample application
-of modest size that demonstrates how to use the `FlagParser` struct to
+of modest size that demonstrates how to use the `flag` module to
 simplify command-line argument processing, and we also learned how to
 structure a V application into modules.
 
 It is important to note that structs, functions and constants not declared as
 `pub` are all accessible to all files in the current module. In order to
 access them outside the module, the `pub` keyword is necessary. This is
-why we need `pub` for `generate_shape`, `GeometricShape`, etc, for us to be
+why we needed `pub` for `generate_shape`, `GeometricShape`, etc, for us to be
 able to use them in the external `main` module (`geo.v`).
 
 Hopefully, this tutorial has been helpful to you. You can get in touch with
