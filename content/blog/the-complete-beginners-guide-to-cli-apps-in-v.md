@@ -37,6 +37,11 @@ Interested? Let's get started...
 
 ## Prerequisites
 
+This tutorial assumes that you have a basic understanding of how
+the command-line works. If you don't, you can learn how to do so
+from this [excellent article](https://flaviocopes.com/cli-for-beginners/)
+by Flavio Copes.
+
 You should have V installed on your system. Ideally, you should also know
 the basic syntax of V. If you need help with these, refer to
 [this guide](/getting-started-with-v/).
