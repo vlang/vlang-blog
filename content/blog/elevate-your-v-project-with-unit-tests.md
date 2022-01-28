@@ -105,13 +105,13 @@ The `v.mod` file anchors the root of the project so that it becomes easier
 to use the `geometry` module. It also contains information about the project
 itself, like the version, description, license, and so on.
 
-The `geo.v` contains the main entry point of the application. It processes
+`geo.v` contains the main entry point of the application. It processes
 the command-line arguments and calls the `generate_shape` function with the
 appropriate arguments.
 
-The `geometry` directory contains the source for out module spread across
+The `geometry` directory contains the source for our module spread across
 multiple files. The `metadata.v` file contains the metadata about the module
-that it reads from the `v.mod`. Next, `options.v` defines the various enums
+that it reads from `v.mod`. Next, `options.v` defines the various enums
 and helper structs that help standardise the input. Finally, the `triangle.v`
 and `quadrilateral.v` files contain the actual code for generating the
 desired shapes.
@@ -132,7 +132,7 @@ necessary options. Then we obtain the result of calling the required
 `generate_xyz()` function. We will then proceed to check if it is the same
 output as we expected. Let's start with the `generate_left_triangle` function.
 
-The final code will be as follows:
+The test looks like this:
 
 ```v {linenos=table}
 import geometry
@@ -162,9 +162,11 @@ A few things are important to note here:
 
 1. The test files need to have a `_test.v` suffix. Otherwise, the V
    testing command will simply ignore the file.
-2. The functions to be executed must have a `test_` prefix. The rest
-   of the functions are skipped.
-3. The `assert (boolean_expression)` statement is the way to check
+2. The functions to be executed must have a `test_` prefix. Any functions
+   whose names do not start with `test_` will be skipped by `v test`, but
+   may exist as helper functions for the tests. This is quite useful if
+   you have common code shared by multiple tests.
+3. The `assert (boolean_expression)` statement is how we check
    the result of a test. You can use any valid boolean expression you
    want, including but not limited to the comparison operators.
 4. When we do not include the `module` declaration, we need to `import`
@@ -516,7 +518,7 @@ You might have noticed that we're using unicode characters in the tests.
 We've made our implementation robust enough to support them.
 
 You can add more tests if you want. We do not need to consider all the
-possibilities cases. It depends on how they are prioritised. Ideally,
+possible cases. It depends on how they are prioritized. Ideally,
 every single public facing function should have an accompanying unit
 test, and the test suite must execute all of the relevant lines in the
 project (which we refer to as _coverage_).
