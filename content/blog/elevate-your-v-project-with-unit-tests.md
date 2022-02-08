@@ -25,21 +25,12 @@ article.
 Let's start by addressing the question: _Why even bother with unit tests?_
 Here are a few reasons why unit tests make sense:
 
-1. **Unit tests are easy to write.** It's a preventitive measure that prevents
-   a lot of bugs from reaching the final product.
-2. In order to write effective unit tests, we need to organise our codebase
-   into **separate, independent, isolated modules**. This way, we can ensure
-   that each of the smaller pieces work correctly on their own, before we try
-   to check the entire system as a whole. It saves a lot of time and effort.
-3. Splitting the system into manageable pieces also makes it easier to focus
-   on **improving the quality of the code independently**, without having to
-   rely on the other parts of the system. A team can assign different people
-   to different parts of the project and they can all work independently,
-   while being confident that things will be fine as long as their code passes
-   all the unit tests.
-4. Running a unit test (ideally) does not take a long time. This **speeds up**
-   **the iteration process** and helps developers ship their software faster.
-5. Unit tests act as a supplement to the documentation and illustrative
+1. **Unit tests are easy to write,** and can prevent a lot of bugs from
+   reaching the final product.
+2. Running a unit test usually does not take long, unlike other more
+   extensive tests. This **speeds up the iteration process** and helps
+   developers ship their software faster.
+3. Unit tests act as a supplement to the documentation and illustrative
    examples. They outline the behaviour of the system, and provide
    **concrete examples** of how to use the corresponding APIs.
 
@@ -67,7 +58,7 @@ projects.
 ## Prerequisites
 
 We assume that you know your way around the command-line interface. If
-you don't, here a good article to help you get started:
+you don't, here is a good article to help you get started:
 [The Command Line for Complete Beginners](https://flaviocopes.com/cli-for-beginners/)
 
 Prior exposure to V is required. You can follow this article
@@ -117,9 +108,9 @@ and `quadrilateral.v` files contain the actual code for generating the
 desired shapes.
 
 We took an architectural decision to keep the signature of all of the
-shape generation functions same:
-`pub fn generate_xyz(options ShapeOptions) []string`. We will make use
-of this to keep our testing strategy simple.
+shape generation functions the same:
+`pub fn generate_xyz(options ShapeOptions) []string`. We will use this
+to keep our testing strategy simple.
 
 ## First Steps
 
@@ -127,7 +118,13 @@ First, we create a `test` directory. Then we create a `unit_tests` directory.
 Inside that, we create a file `triangle_test.v` in which we will write our
 first test function.
 
-The general way to proceed is to create a new `ShapeOptions` struct with the
+In general, we take the following steps to write unit tests:
+
+1. Prepare the input for a function to test.
+2. Run the function.
+3. Compare the result with the expected output.
+
+The way we proceed is to create a new `ShapeOptions` struct with the
 necessary options. Then we obtain the result of calling the required
 `generate_xyz()` function. We will then proceed to check if it is the same
 output as we expected. Let's start with the `generate_left_triangle` function.
@@ -155,8 +152,8 @@ needs to have the module declaration at the top.
 
 You may include a module declaration like `module geometry_test` at
 the top of these files but that is not compulsory, as stated before.
-Ideally, you should only be testing the public facing functions so that
-you have room to refactor your code without any users noticing.
+Ideally, you should be testing all the public facing functions so that
+you have room to refactor your private functions without any users noticing.
 
 A few things are important to note here:
 
@@ -170,9 +167,9 @@ A few things are important to note here:
    the result of a test. You can use any valid boolean expression you
    want, including but not limited to the comparison operators.
 4. When we do not include the `module` declaration, we need to `import`
-   it to make the required functions available. This is not necessary
-   when we define the test file right in the module and declare it
-   to be a part of it.
+   it, just like normal code has to import it, to make the required functions
+   available. This is not necessary when we define the test file right in the
+   module and declare it to be a part of it.
 
 ## The `v test` Command
 
@@ -528,13 +525,13 @@ testing only the critical, unchanging components. If you're in a team, listen
 to what your senior says. If you're the senior, don't set unrealistic
 expectations for your team, or yourself.
 
-## BONUS: Testing The Output of External Commands
+## BONUS: Functional Testing
 
-Until now, we assessed the correctness of our implementation my testing
-the functions of the `geometry` module directly. We would also like to
+Until now, we assessed that our implementation is not blatantly wrong by
+testing the functions of the `geometry` module directly. We would also like to
 make sure the program can compile and generate coherent output. In order
-to test this, we can spawn a new process from V and compare the output
-of the child process to our expected results.
+to test this, we can make our test compile and run a separate V program, and
+compare its output to our expected results.
 
 ### Checking the Help Text
 
@@ -588,8 +585,8 @@ Note that we do not simply use `'v run . $flag'`. This is because we may
 be testing a development version of V that is not symlinked or added to path.
 The `@VEXE` term is a compile-time constant that provides the path to the
 V executable currently being run. Additionally, there may be instances
-where people have `$` in their paths. In order to avoid confusing the
-compiler, we use `os.quoted_path` to escape the path.
+where people have `$` or spaces in their paths. In order to avoid confusing
+the compiler, we use `os.quoted_path` to quote the path.
 
 For the rest of code, we just use `asserts` normally.
 
@@ -719,10 +716,8 @@ Summary for all V _test.v files: 2 passed, 2 total. Runtime: 241 ms, on 2 parall
 ## Wrapping Up
 
 This was a detailed example of how one would go about adding unit tests
-to their V projects. Some teams may practice **Test Driven Development**
-where the unit tests are written before the actual implementation to
-ensure that the API design goal is met. In any case, tests are good to
-have and instil confidence in the users of a project.
+to their V projects. Tests are good to have and instil confidence in the
+maintainers of a project.
 
 We covered a lot of ground with `geo` but not everything. Here are a list
 of things that we did not do:
