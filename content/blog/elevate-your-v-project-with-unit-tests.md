@@ -737,8 +737,8 @@ always be cases like malformed data, offline databases, failing infrastructure,
 and so on that may not be your fault, but your software might need to
 be robust enough to handle them. Above all else, user-testing is a must;
 this ensures that the product _is_ indeed what the "client" asked for.
-Unit testing is just a very efficient technique (one of many) to remove
-a multitude of potential defects at once.
+Unit testing is just a very efficient technique (one of many) to detect and
+prevent a multitude of potential defects at once.
 
 This article was a follow-up to
 [The Complete Beginner's Guide to CLI Apps in V](/the-complete-beginners-guide-to-cli-apps-in-v/).
