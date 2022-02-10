@@ -70,7 +70,7 @@ so make sure to have your project set up and ready to go.
 
 Alternatively, you can clone the
 [`geo` repository](https://github.com/hungrybluedev/geo), delete the
-`test` directory and follow along with the tutorial. More information
+`*_test.v` files and follow along with the tutorial. More information
 on V's support for testing can be found in the
 [documentation](https://github.com/vlang/v/blob/master/doc/docs.md#testing).
 
@@ -114,7 +114,7 @@ to keep our testing strategy simple.
 
 ## First Steps
 
-First, we create a `test` directory. Then we create a `unit_tests` directory.
+We navigate to the `geometry` directory that contains our module's source.
 Inside that, we create a file `triangle_test.v` in which we will write our
 first test function.
 
@@ -189,7 +189,7 @@ Summary for all V _test.v files: 1 passed, 1 total. Runtime: 315 ms, on 1 job.
 
 Nice! Now that it works, we can add more functions progressively. I'm including the
 full source here, which you can also find on the
-[`test` directory](https://github.com/hungrybluedev/geo/tree/main/test/). The full
+[`geometry` directory](https://github.com/hungrybluedev/geo/tree/main/geometry/). The full
 set of tests is written by [SheatNoisette](https://github.com/SheatNoisette).
 
 ### `triangle_test.v`
@@ -547,7 +547,7 @@ run the command properly on all systems. Next, we store the output
 of the process and see if it contains a list of terms that we
 specify in an array.
 
-In a new directory called `command_line_tests` in the `tests` folder,
+In the base directory of the repo where we have the `geo.v` main file,
 we create a new file `help_text_test.v`:
 
 ```v {linenos=table}
@@ -674,7 +674,7 @@ fn test_shapes_only() {
 ```
 
 As always, we run the tests with `v test .` from the root of the project.
-If we need to run only the unit tests, we can type ` v test test/unit_tests`
+If we need to run only the unit tests, we can type ` v test geometry`
 instead. Remember to use `Tab` for autocomplete support for paths.
 
 ## BONUS: Running Specific Tests
