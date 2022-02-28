@@ -30,11 +30,13 @@
   <meta property="og:url" content="{{ .Permalink }}" />
   <meta property="twitter:url" content="{{ .Permalink }}" />
 
+  <meta property="twitter:site" content="@v_language" />
+
   {{ if .Params.image }}
-  <meta property="og:image" content="{{ .Site.BaseURL }}/{{ .Params.image }}" />
+  <meta property="og:image" content="{{ .Site.BaseURL }}{{ .Params.image }}" />
   <meta
     property="twitter:image"
-    content="{{ .Site.BaseURL }}/{{ .Params.image }}"
+    content="{{ .Site.BaseURL }}{{ .Params.image }}"
   />
   {{ end }}
 
