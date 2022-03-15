@@ -217,7 +217,7 @@ you prefer more stability. Then we clone the current project using the
 `actions/checkout@v2` action.
 
 We can now start checking the codebase to ensure that it passes the minimum
-standards we set. V has an opinionated auto-formatter available called `vfmt`.
+standards we set. V ships with its own opinionated tool for formatting V source code.
 Here is a sample usage:
 
 ```bash
