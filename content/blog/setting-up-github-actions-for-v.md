@@ -245,11 +245,12 @@ Note that we do not automatically format the code in the CI because it might
 lead to huge `diff`s later on and a lot of potentially redundant commits. It
 is also easier to have our tests be _read-only_.
 
-This step executes quickly. Next we make sure that we can build our project.
-This is as simple as running the `v .` command. This will build the project
-fast. If you plan to distribute the built executable, it is recommended to
-use `v -prod .` to generate an optimised executable, which takes slightly
-longer. A suggestion is to generate optimised builds when a tag is pushed.
+The source code formatting check finishes quickly. Next we make sure that we
+can build our project. This is as simple as running the `v .` command. This
+will build the project fast. If you plan to distribute the built executable,
+it is recommended to use `v -prod .` to generate an optimised executable,
+which takes slightly longer. You can also choose to generate optimised `-prod`
+builds, only when a tag is pushed, instead of on each commit or Pull Request.
 
 Finally, we run the unit tests (if any) to make sure that we have not
 regressed, in the form of failing tests. V's in-built testing framework
