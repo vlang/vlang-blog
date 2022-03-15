@@ -7,7 +7,7 @@ authorname: Subhomoy Haldar
 authorlink: subhomoy-haldar
 categories: ["tutorials"]
 date: 2022-03-14T12:28:35+05:30
-image:
+image: images/setting-up-github-actions-for-v/hero.webp
 ---
 
 ## The Article Series
@@ -26,15 +26,15 @@ deliver the final product.
 
 **Continuous Integration** for the most part is about the second item in the
 list: _making sure everyone is on the same page_. Individuality is important
-for problem solving: it offers new angles, allows people to shine where they
-are good at. But it can be a problem in case of things like formatting
+for problem solving: it offers new angles and allows people to shine where they
+are able. But it can be a problem in cases such as formatting
 preferences and build environments. Homogeneity is preferred in these
 instances. Therefore, the decision makers band together to lay down some
 ground rules for everyone to follow. These include things such as:
 
 1. Expected behaviour that is standardized using _tests_.
 2. _Source Code formatting_ guidelines that are strictly enforced.
-3. Managing build and release _environments_ with relevant dependencies managed.
+3. Managing build and release _environments_ with relevant dependencies.
 
 Once all protocols are in place, it is beneficial to automate these steps.
 It saves on time and effort while allowing the team to experiment without
@@ -84,15 +84,18 @@ if there's demand for it.
 
 Let us start by discussing some terminology.
 
-A _workflow_ is a set of jobs, plus a specification on when to run them, described in [YAML](https://yaml.org/).
+A _workflow_ is a set of jobs, plus a specification on when to run them,
+described in [YAML](https://yaml.org/).
 We define one workflow per YAML file. All workflows are stored in the
-`.github/workflows` directory. They are generally triggered on every push,
-but they can be trigged manually, or on every tag, or periodically.
+`.github/workflows` directory in your project. They are generally triggered
+on every push, but they can be trigged manually, or on every tag, or
+periodically.
 
 There can be several _jobs_ per _workflow_. Each job is a set of steps
 executed sequentially. Every _step_ is either a shell script that will
 be run, or an _action_ from the marketplace. Each job is run on the same
-_runner_ (think: machine), so the data is generally persisted across the steps.
+_runner_ (think: server instance - may be a physical machine, a cloud
+instance, etc.), so the data is generally persisted across the steps.
 We use this to our advantage by setting up the environment the way we prefer
 so that we can run the necessary commands afterwards.
 
@@ -178,7 +181,7 @@ _ubuntu_ runners. So it might be worthwhile to quickly prototype on
 `ubuntu-latest` and then add `macos-latest` and/or `windows-latest` when
 needed.
 
-We can now defined the _steps_ for the `build` job:
+We can now define the _steps_ for the `build` job:
 
 ```yaml {tabWidth=2}
 # ...
@@ -236,7 +239,7 @@ You can run `v help fmt` to get more details on all the available options.
 Two more options we have at our disposal are:
 
 1. `v fmt -diff .` which displays the difference between the original and
-   formatted source, if any. Ideally, we don't any difference before we
+   formatted source, if any. Ideally, we don't want any difference before we
    push the commits.
 2. `v fmt -verify .` which reports an error if it finds an unformatted
    file in the repository.
@@ -253,7 +256,7 @@ which takes slightly longer. You can also choose to generate optimised `-prod`
 builds, only when a tag is pushed, instead of on each commit or Pull Request.
 
 Finally, we run the unit tests (if any) to make sure that we have not
-regressed, in the form of failing tests. V's in-built testing framework
+regressed. This will be shown by failing tests. V's built-in testing framework
 can be used for this. It's as simple as running the command `v test .`
 which runs all the unit tests in the project. For an detailed account on
 writing unit tests in V, please refer to the
@@ -336,7 +339,7 @@ Continuous Delivery (CD). If we add steps for authentication and
 deployment of the executable, then that would be Continuous Deployment
 (also CD).
 
-An example of such an workflow can be found in the author's
+An example of such a workflow can be found in the author's
 [klonol](https://github.com/hungrybluedev/klonol/tree/main/.github/workflows)
 project.
 
