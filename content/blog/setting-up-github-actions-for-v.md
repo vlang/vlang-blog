@@ -152,15 +152,10 @@ The reference workflow files are available here:
 
 ## Setting Up Github Actions CI for V
 
-First we create a new file `ci.yml` in the `.github/workflows` directory.
-We have a few options to choose from:
-
-1. Add a new workflow from the _Actions_ tab of the repository.
-2. Run `mkdir -p .github/workflows` from the root of the project. Then use
-   our preferred editor of choice to create the `ci.yml`file.
-3. Use a graphical file manager to create the `.github` directory and
-   then the `workflows` directory inside it. Proceed to create `ci.yml`
-   inside that directory with our favourite text editor.
+Run `mkdir -p .github/workflows` from the root of the project. Then use
+the preferred editor of choice to create the `ci.yml` file in the `workflows`
+directory. Alternatively, we can add a new workflow from the _Actions_ tab
+of the repository.
 
 ```text
 . (root of the project)
