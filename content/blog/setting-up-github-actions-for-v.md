@@ -86,7 +86,7 @@ Let us start by discussing some terminology.
 
 A _workflow_ is a set of instructions described in [YAML](https://yaml.org/).
 We define one workflow per YAML file. All workflows are stored in the
-`.github/workflows` directory. They are generally trigged on every push,
+`.github/workflows` directory. They are generally triggered on every push,
 but they can be trigged manually, or on every tag, or periodically.
 
 There can be several _jobs_ per _workflow_. Each job is a set of steps
