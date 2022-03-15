@@ -192,7 +192,7 @@ found in the
 [official documentation](https://docs.github.com/en/actions/using-jobs/using-a-build-matrix-for-your-jobs).
 Briefly, they help us reuse the same steps for different platforms by performing
 substitution of variables. For example, `${{ matrix.os }}` will be replaced by
-all the OSes we defined in the matrix, and the job will be run for each of them.
+each OS we defined in the matrix, one at a time, and the job will be run for each of them.
 
 ```yaml {tabWidth=2}
 # ...
