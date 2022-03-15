@@ -260,8 +260,7 @@ writing unit tests in V, please refer to the
 [previous article](/elevate-your-v-project-with-unit-tests/).
 
 > NOTE: If there are problems with flaky unit tests, a good first action
-> is to set the `VJOBS` environment variable to 1. In this way, the
-> step for unit testing would become:
+> is to set the `VJOBS` environment variable to 1:
 >
 >     - name: Run Tests
 >       run: v test .
@@ -345,7 +344,7 @@ project.
 
 A CI/CD setup is a great way to automate a lot of tedious work. It allows
 the developers to focus on fixing bugs, adding features, and they do not
-have to worry about regression, or stepping on each others' toes.
+have to worry about finding regressions, or stepping on each others' toes.
 
 This was a small example of setting up one CI workflow for a V project.
 We specifically used GitHub Actions here, but the general concepts carry
