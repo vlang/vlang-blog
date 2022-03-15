@@ -68,7 +68,7 @@ provide first-party CI/CD services. They offer generous free-tiers which
 exceed the requirements of regular developers and small businesses.
 
 If you put in a bit of elbow grease, you can set up your own CI/CD service.
-For example, a popular FOSS pairing is
+For example, a popular FOSS (Free Open Source Software) pairing is
 [Woodpecker CI](https://woodpecker-ci.org/) with
 [Gitea](https://gitea.io/en-us/).
 
@@ -88,8 +88,14 @@ A _workflow_ is a set of jobs, plus a specification on when to run them,
 described in [YAML](https://yaml.org/).
 We define one workflow per YAML file. All workflows are stored in the
 `.github/workflows` directory in your project. They are generally triggered
-on every push, but they can be trigged manually, or on every tag, or
-periodically.
+on every push, but they can be trigged manually, or on every
+[git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging), or periodically.
+
+A sample usage for `git tag` is:
+
+```bash
+git tag -a v0.x.y -m "version description"
+```
 
 There can be several _jobs_ per _workflow_. Each job is a set of steps
 executed sequentially. Every _step_ is either a shell script that will
@@ -100,8 +106,11 @@ We use this to our advantage by setting up the environment the way we prefer
 so that we can run the necessary commands afterwards.
 
 An _action_ is a custom application that runs on the GitHub Actions platform.
-We generally use community-provided actions, but we can also create our own.
-They help us avoid a lot of boilerplate. A good example of an action is
+Both free and paid offerings are available on the
+[GitHub marketplace](https://docs.github.com/en/developers/github-marketplace/github-marketplace-overview/about-github-marketplace).
+where users and organisations can publish their own actions.
+Actions encapsulate an often repeated task in a convenient wrapper and
+help us avoid a lot of boilerplate. A good example of an action is
 [Setup V](https://github.com/marketplace/actions/setup-vlang), which we will
 use in this tutorial.
 
@@ -130,12 +139,28 @@ Broadly, here are the steps we need to perform:
 6. Run the unit tests if any.
 7. Optionally upload the built artifacts to be used later.
 
+> Artifacts are files that are produced by the build process. They can be
+> executables, logs, results, trained models, or any other file that has a
+> significance to the end user, and can be reused after the pipeline has
+> finished.
+>
+> Refer to the [documentation](https://docs.github.com/en/actions/using-workflows/storing-workflow-data-as-artifacts)
+> for more information.
+
 The reference workflow files are available here:
 [workflows](https://github.com/hungrybluedev/geo/tree/main/.github/workflows).
 
 ## Setting Up Github Actions CI for V
 
 First we create a new file `ci.yml` in the `.github/workflows` directory.
+We have a few options to choose from:
+
+1. Add a new workflow from the _Actions_ tab of the repository.
+2. Run `mkdir -p .github/workflows` from the root of the project. Then use
+   our preferred editor of choice to create the `ci.yml`file.
+3. Use a graphical file manager to create the `.github` directory and
+   then the `workflows` directory inside it. Proceed to create `ci.yml`
+   inside that directory with our favourite text editor.
 
 ```text
 . (root of the project)
@@ -161,9 +186,13 @@ trigger the workflow on every push to the `main` branch. We can also trigger
 it on every tag, or on pushes to a pull request.
 
 Next, we define the primary `build` job in the list of jobs. We define an
-array or _matrix_ called `os` with our desired platforms. This goes in the
-`strategy` section of the job. Then we refer to the current os when we specify
-which type of runner to use.
+array called `os` in the _build matrix_ with our desired platforms. This goes
+in the `strategy` section of the job. More details about build matrices can be
+found in the
+[official documentation](https://docs.github.com/en/actions/using-jobs/using-a-build-matrix-for-your-jobs).
+Briefly, they help us reuse the same steps for different platforms by performing
+substitution of variables. For example, `${{ matrix.os }}` will be replaced by
+all the OSes we defined in the matrix, and the job will be run for each of them.
 
 ```yaml {tabWidth=2}
 # ...
@@ -214,10 +243,13 @@ jobs:
         run: v test .
 ```
 
-First, we use the `vlang/setup-v@1` GitHub Action to install V for our runner.
+First, we use the `vlang/setup-@v1` GitHub Action to install V for our runner.
 We set `check-latest` to `true` to get the latest updates. Leave this out if
 you prefer more stability. Then we clone the current project using the
-`actions/checkout@v2` action.
+`actions/checkout@v2` action. The number following the `@` symbol is the
+version. It is 1 in case of the `setup-v` action, and 2 in case of the
+`checkout` action. The name before the `/` is the name of the user or
+organisation that published the action in the marketplace.
 
 We can now start checking the codebase to ensure that it passes the minimum
 standards we set. V ships with its own opinionated tool for formatting V source code.
@@ -262,13 +294,20 @@ which runs all the unit tests in the project. For an detailed account on
 writing unit tests in V, please refer to the
 [previous article](/elevate-your-v-project-with-unit-tests/).
 
-> NOTE: If there are problems with flaky unit tests, a good first action
-> is to set the `VJOBS` environment variable to 1:
->
->     - name: Run Tests
->       run: v test .
->       env:
->         VJOBS: 1
+NOTE: If there are problems with flaky unit tests, a good first action
+is to set the `VJOBS` environment variable to 1:
+
+```yaml
+- name: Run Tests
+  run: v test .
+  env:
+    VJOBS: 1
+```
+
+`VJOBS` (if set) defines the maximum number of processes that V can spawn.
+Unit tests are executed in parallel to speed up testing. Setting `VJOBS` to
+1 removes parallelism and makes the tests execute sequentially. This is useful
+if you're spawning other processes which make use of resources on disk, for example.
 
 ## Testing the CI with sample commits
 
@@ -332,7 +371,7 @@ email notification from GitHub.
 For now, we have only talked about Continuous Integration. As mentioned
 before, we can run a separate workflow when git tags are pushed to the
 remote repository. In this repository, we can do the same things as in
-the regular workflow, but include some novel things things as building
+the regular workflow, but include some novel things such as building
 an optimised executable and uploading the executable built for all
 available runners for later use. The latter would be a good example of
 Continuous Delivery (CD). If we add steps for authentication and
