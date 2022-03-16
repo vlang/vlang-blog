@@ -1,7 +1,7 @@
 ---
 title: "Setting Up GitHub Actions for V"
 subtitle: "Introducing **Setup V**, and discussing why CI/CD is important."
-summary: "This article will walk you through setting up Github Actions for V. We begin with a primer on CI/CD, the various benefits and drawbacks. Then we make use of the Setup V action to set up a CI/CD environment for V, how to set it up, and how to use it. We will close with a link to a more sophisticated example."
+summary: "This article will walk you through setting up GitHub Actions for V. We begin with a primer on CI/CD, the various benefits and drawbacks. Then we make use of the Setup V action to set up a CI/CD environment for V, how to set it up, and how to use it. We will close with a link to a more sophisticated example."
 page: Blog
 authorname: Subhomoy Haldar
 authorlink: subhomoy-haldar
@@ -47,7 +47,12 @@ nutshell.
 automatically building the product after every change and deploying it to
 the staging or production environment, respectively. This allows the
 developers to just write code and push fixes whenever they want. The
-"pipeline" takes care of the rest.
+"pipeline" takes care of the rest. An example of this in action would
+be this very blog: we push changes to the main branch of the
+[vlang-blog](https://github.com/vlang/vlang-blog/) repository, and
+[Cloudflare Pages](https://developers.cloudflare.com/pages/)
+deploys the changes to the production environment,
+which in this case, is the [official V blog](https://blog.vlang.io/).
 
 You can read
 [Red Hat's page on CI/CD](https://www.redhat.com/en/topics/devops/what-is-ci-cd)
@@ -88,7 +93,7 @@ A _workflow_ is a set of jobs, plus a specification on when to run them,
 described in [YAML](https://yaml.org/).
 We define one workflow per YAML file. All workflows are stored in the
 `.github/workflows` directory in your project. They are generally triggered
-on every push, but they can be trigged manually, or on every
+on every push, but they can be triggered manually, or on every
 [git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging), or periodically.
 
 A sample usage for `git tag` is:
@@ -107,7 +112,7 @@ so that we can run the necessary commands afterwards.
 
 An _action_ is a custom application that runs on the GitHub Actions platform.
 Both free and paid offerings are available on the
-[GitHub marketplace](https://docs.github.com/en/developers/github-marketplace/github-marketplace-overview/about-github-marketplace).
+[GitHub marketplace](https://docs.github.com/en/developers/github-marketplace/github-marketplace-overview/about-github-marketplace),
 where users and organisations can publish their own actions.
 Actions encapsulate an often repeated task in a convenient wrapper and
 help us avoid a lot of boilerplate. A good example of an action is
@@ -150,7 +155,7 @@ Broadly, here are the steps we need to perform:
 The reference workflow files are available here:
 [workflows](https://github.com/hungrybluedev/geo/tree/main/.github/workflows).
 
-## Setting Up Github Actions CI for V
+## Setting Up GitHub Actions CI for V
 
 Run `mkdir -p .github/workflows` from the root of the project. Then use
 the preferred editor of choice to create the `ci.yml` file in the `workflows`
@@ -353,7 +358,7 @@ repository. Then push a commit to test.
 For testing purposes, we can push an empty commit to trigger the CI:
 
 ```bash
-git commit -m "trigget CI attempt 1" --allow-empty
+git commit -m "trigger CI attempt 1" --allow-empty
 ```
 
 We can keep iterating, making tweaks, committing more changes, until the
@@ -389,4 +394,7 @@ over to other DevOps platforms as well.
 
 We hope this article will prove useful to you. If you face any difficulties,
 please feel free to reach out to us on the [V Discord Server](https://discord.gg/vlang),
-specifically in the `#help` channel.
+specifically in the `#help` channel. If you have made a project in V that
+you're proud of, and want to share it with the community, please consider
+writing about it in the `#community` or `#showcase-discussion` channel. We're
+always thrilled to have new people joining our community!
