@@ -96,12 +96,6 @@ We define one workflow per YAML file. All workflows are stored in the
 on every push, but they can be triggered manually, or on every
 [git tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging), or periodically.
 
-A sample usage for `git tag` is:
-
-```bash
-git tag -a v0.x.y -m "version description"
-```
-
 There can be several _jobs_ per _workflow_. Each job is a set of steps
 executed sequentially. Every _step_ is either a shell script that will
 be run, or an _action_ from the marketplace. Each job is run on the same
@@ -157,7 +151,7 @@ The reference workflow files are available here:
 
 ## Setting Up GitHub Actions CI for V
 
-Run `mkdir -p .github/workflows` from the root of the project. Then use
+Run `mkdir -p .github/workflows` locally from the root of the project. Then use
 the preferred editor of choice to create the `ci.yml` file in the `workflows`
 directory. Alternatively, we can add a new workflow from the _Actions_ tab
 of the repository.
@@ -251,6 +245,29 @@ version. It is 1 in case of the `setup-v` action, and 2 in case of the
 `checkout` action. The name before the `/` is the name of the user or
 organisation that published the action in the marketplace.
 
+If our V project has any dependencies (mentioned in the `v.mod` file), we can
+install them using the `v install` command:
+
+```yaml
+# ...
+jobs:
+  build:
+    # ...
+    steps:
+      # ...
+      - name: Checkout ${{ github.event.repository.name }}
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: v install
+
+      - name: Check if code is formatted
+        # ...
+```
+
+For more details on the `v install` command, run `v help install`. Since
+`geo` does not have any dependencies, we skip this step for our workflow.
+
 We can now start checking the codebase to ensure that it passes the minimum
 standards we set. V ships with its own opinionated tool for formatting V source code.
 Here is a sample usage:
@@ -275,6 +292,12 @@ Two more options we have at our disposal are:
    push the commits.
 2. `v fmt -verify .` which reports an error if it finds an unformatted
    file in the repository.
+
+We use `|` in the `run` step to make YAML preserve the newlines and make it
+run multiple shell commands sequentially. The official specification can be
+consulted here: [literal-style](https://yaml.org/spec/1.2.2/#literal-style).
+We can alternatively write the `run` step as:
+`v fmt -diff . && v fmt -verify .`
 
 Note that we do not automatically format the code in the CI because it might
 lead to huge `diff`s later on and a lot of potentially redundant commits. It
@@ -359,6 +382,15 @@ For testing purposes, we can push an empty commit to trigger the CI:
 
 ```bash
 git commit -m "trigger CI attempt 1" --allow-empty
+git push
+```
+
+For workflows triggered by pushing tags, we can tag commits using git like
+this:
+
+```bash
+git tag -a v0.x.y -m "version description"
+git push <remote> --tags
 ```
 
 We can keep iterating, making tweaks, committing more changes, until the
