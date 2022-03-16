@@ -21,10 +21,10 @@ image: images/setting-up-github-actions-for-v/hero.webp
 Software Development is a very involved process, with a lot of moving parts.
 This is especially true when you have several developers working in one or
 more teams. The ultimate objective of these endeavours is to understand the
-client requirements, make sure everybody is on the same page, and eventually,
+client's requirements, make sure everybody is on the same page, and eventually,
 deliver the final product.
 
-**Continuous Integration** for the most part is about the second item in the
+**Continuous Integration** for the most part is about the second item on the
 list: _making sure everyone is on the same page_. Individuality is important
 for problem solving: it offers new angles and allows people to shine where they
 are able. But it can be a problem in cases such as formatting
@@ -62,13 +62,13 @@ for more information. Also, here's their page on the umbrella topic of
 ## When should you consider _not_ setting up a CI/CD environment?
 
 A few years ago, people would argue that setting up a CI environment was
-resource intensive. You would have to setup a CI server, install the
+resource intensive. You would have to set up a CI server, install the
 relevant software on it, setup the notification systems, and put a lot
 of time into general infrastructure management.
 
-Now it's no longer the case. Several providers like
+Now it's no longer the case. Several providers, like
 [GitLab](https://docs.gitlab.com/ee/ci/index.html) and
-[GitHub](https://docs.github.com/en/actions)
+[GitHub](https://docs.github.com/en/actions),
 provide first-party CI/CD services. They offer generous free-tiers which
 exceed the requirements of regular developers and small businesses.
 
@@ -105,7 +105,7 @@ We use this to our advantage by setting up the environment the way we prefer
 so that we can run the necessary commands afterwards.
 
 An _action_ is a custom application that runs on the GitHub Actions platform.
-Both free and paid offerings are available on the
+Both free and paid offerings are available in the
 [GitHub marketplace](https://docs.github.com/en/developers/github-marketplace/github-marketplace-overview/about-github-marketplace),
 where users and organisations can publish their own actions.
 Actions encapsulate an often repeated task in a convenient wrapper and
@@ -135,7 +135,7 @@ Broadly, here are the steps we need to perform:
 3. Install dependencies if needed.
 4. Make sure our code is properly formatted.
 5. Ensure that our project can be built.
-6. Run the unit tests if any.
+6. Run the unit tests, if any.
 7. Optionally upload the built artifacts to be used later.
 
 > Artifacts are files that are produced by the build process. They can be
@@ -151,7 +151,7 @@ The reference workflow files are available here:
 
 ## Setting Up GitHub Actions CI for V
 
-Run `mkdir -p .github/workflows` locally from the root of the project. Then use
+Run `mkdir -p .github/workflows` locally, from the root of the project. Then use
 the preferred editor of choice to create the `ci.yml` file in the `workflows`
 directory. Alternatively, we can add a new workflow from the _Actions_ tab
 of the repository.
@@ -174,8 +174,8 @@ on:
     branches: [main]
 ```
 
-The name of the workflow is "CI". You can use a more descriptive name here if
-you want. The `on` section defines the triggers for the workflow. Here, we
+The name of the workflow is "CI". You can use a more descriptive name here.
+The `on` section defines the triggers for the workflow. Here, we
 trigger the workflow on every push to the `main` branch. We can also trigger
 it on every tag, or on pushes to a pull request.
 
@@ -266,7 +266,7 @@ jobs:
 ```
 
 For more details on the `v install` command, run `v help install`. Since
-`geo` does not have any dependencies, we skip this step for our workflow.
+`geo` does not have any dependencies, we skip this step in our workflow.
 
 We can now start checking the codebase to ensure that it passes the minimum
 standards we set. V ships with its own opinionated tool for formatting V source code.
@@ -303,8 +303,8 @@ Note that we do not automatically format the code in the CI because it might
 lead to huge `diff`s later on and a lot of potentially redundant commits. It
 is also easier to have our tests be _read-only_.
 
-The source code formatting check finishes quickly. Next we make sure that we
-can build our project. This is as simple as running the `v .` command. This
+The source code formatting check finishes quickly. Next, we will make sure that
+we can build our project. This is as simple as running the `v .` command. This
 will build the project fast. If you plan to distribute the built executable,
 it is recommended to use `v -prod .` to generate an optimised executable,
 which takes slightly longer. You can also choose to generate optimised `-prod`
@@ -313,7 +313,7 @@ builds, only when a tag is pushed, instead of on each commit or Pull Request.
 Finally, we run the unit tests (if any) to make sure that we have not
 regressed. This will be shown by failing tests. V's built-in testing framework
 can be used for this. It's as simple as running the command `v test .`
-which runs all the unit tests in the project. For an detailed account on
+which runs all the unit tests in the project. For a detailed account on
 writing unit tests in V, please refer to the
 [previous article](/elevate-your-v-project-with-unit-tests/).
 
@@ -418,7 +418,7 @@ project.
 
 A CI/CD setup is a great way to automate a lot of tedious work. It allows
 the developers to focus on fixing bugs, adding features, and they do not
-have to worry about finding regressions, or stepping on each others' toes.
+have to worry about finding regressions, or stepping on each other's toes.
 
 This was a small example of setting up one CI workflow for a V project.
 We specifically used GitHub Actions here, but the general concepts carry
