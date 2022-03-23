@@ -10,6 +10,12 @@ date: 2021-12-20T18:34:27+05:30
 image: images/the-complete-beginners-guide-to-cli-apps-in-v/hero.webp
 ---
 
+## The Article Series
+
+> 1. **The Complete Beginner’s Guide to CLI Apps in V** _(You are here)_
+> 2. [Elevate Your V Project With Unit Tests](/elevate-your-v-project-with-unit-tests/)
+> 3. [Setting Up GitHub Actions for V](/setting-up-github-actions-for-v)
+
 ## Goal
 
 Our goal is to make a simple CLI application that prints various geometric
@@ -419,7 +425,7 @@ one or they quit by pressing `Ctrl-C`.
 
 Finally, we can now call the `generate_shape()` function and pass in
 the details for the `ShapeOptions` configuration struct.
-If you are familiar with Python, this syntax is reminiscent of 
+If you are familiar with Python, this syntax is reminiscent of
 Python's named arguments.
 
 The updated source code for `geo.v` is therefore:
@@ -806,6 +812,7 @@ Options:
 ```
 
 > `v run . --version`
+
 ```text
 geo x.y.z
 ```
