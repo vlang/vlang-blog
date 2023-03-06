@@ -132,7 +132,7 @@ For help with other editors, please join our [Discord Server](https://discord.gg
 The [V Language Server](https://github.com/vlang/vls) (WIP) is an
 [LSP](https://microsoft.github.io/language-server-protocol/)
 compatible language server. The VSCode extension should be able to automatically
-download and instal VLS. In case of errors,
+download and install VLS. In case of errors,
 check out the [pre-built binaries](https://github.com/vlang/vls/releases), or
 [build VLS from source](https://github.com/vlang/vls#build-from-source). If your find any bugs,
 get them confirmed in the **#vls** channel on our server and then report them on
